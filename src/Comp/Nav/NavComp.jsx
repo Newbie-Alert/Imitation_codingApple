@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 function NavComp() {
   // STATE
+  let [menuSwitch, setMenuSwitch] = useState(false);
   let [menuClass, setMenu] = useState([styles, styles, styles]);
   let [menuCount, setMenuCount] = useState(false);
   let [containerClass, setContainerClass] = useState(styles);
+  let [Page, setPage] = useState([styles.now, styles, styles]);
 
   // USER UI
   let [userUi, setUserUi] = useState(false);
@@ -17,6 +19,7 @@ function NavComp() {
   let navi = useNavigate();
 
   // FUNCTION
+  /** 메뉴를 클릭하면 X자 형태로 변환되는 함수 **/
   function menuAction() {
     // 메뉴 햄버거 X자로 이동
     if (menuCount === false) {
@@ -40,20 +43,45 @@ function NavComp() {
     }
   }
 
+  /** Nav의 현재 페이지를 빨갛게 표기하는 함수 **/
+  function Pagination(listNum) {
+    setPage((Page = [styles, styles, styles]));
+    let copy = [...Page];
+    copy[listNum] = styles.now;
+    setPage(copy);
+  }
+
   return (
     <div
       className={`${styles.nav_container} ${styles.container} ${containerClass}`}
     >
       {userUi == true ? <UserPopup /> : null}
-      <div
-        className={styles.nav_logo}
-        onClick={() => {
-          navi("/");
-        }}
-      >
+      <div className={styles.nav_logo} onClick={() => navi("/")}>
         <img src={process.env.PUBLIC_URL + "logo.png"} alt="" />
       </div>
       <div className={styles.nav_info}>
+        <div className={styles.nav_category}>
+          <ul>
+            <li
+              onClick={() => Pagination(0)}
+              className={`${styles.nav_category_item} ${Page[0]}`}
+            >
+              HOME
+            </li>
+            <li
+              onClick={() => Pagination(1)}
+              className={`${styles.nav_category_item} ${Page[1]}`}
+            >
+              COURSE
+            </li>
+            <li
+              onClick={() => Pagination(2)}
+              className={`${styles.nav_category_item} ${Page[2]}`}
+            >
+              ABOUT
+            </li>
+          </ul>
+        </div>
         <div className={styles.nav_user}>
           <img
             onClick={() => {
@@ -63,6 +91,7 @@ function NavComp() {
             }}
             src={process.env.PUBLIC_URL + "user.png"}
             alt="user_icon"
+            width={"30px"}
           />
           <span
             onClick={() => {
@@ -88,7 +117,7 @@ function NavComp() {
   );
 }
 
-// Composition for Nav
+// UI Composition for Nav
 function UserPopup() {
   return (
     <div className={styles.user_container}>
