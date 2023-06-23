@@ -4,6 +4,7 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+  letter-spacing: -0.05rem;
 }
 
 img {
@@ -84,10 +85,9 @@ img {
 
 /* MAIN_SECTION_ONE_IMAGES */
 
-
 .section_one_images {
   position: relative;
-  width: 55%;
+  width: 850px;
 }
 
 .bubble {
@@ -109,14 +109,14 @@ img {
 }
 
 .bubble1 {
-  left: 35px;
+  left: 10%;
   top: 75px;
   animation: bubbleMotion 1.5s 0s ease-in-out;
 }
 
 .bubble2 {
   top: 25px;
-  right: 65px;
+  right: 20%;
   animation: bubbleMotion 1.2s 0s ease-in-out;
   ;
 }
@@ -141,7 +141,7 @@ img {
   right: 50%;
   left: 50%;
   transform: translate(-50%);
-  top: 26%;
+  top: 25.9%;
   animation: FadeAnimation 2s 0s ease-in-out;
 }
 
@@ -153,5 +153,191 @@ img {
 
   100% {
     opacity: 1;
+  }
+}
+
+
+/* SECTION_SECOND */
+.section_second_container {
+  width: 100%;
+  background-color: #532F8E;
+  padding-bottom: 2.5rem;
+}
+
+.section_second {
+  width: 100%;
+}
+
+.section_second_top {
+  width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.section_second_top h3 {
+  position: absolute;
+  width: 550px;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: rgb(0, 0, 0) 2px 0 1px;
+  top: 37%;
+  left: -12%;
+  transform: rotate(8deg);
+}
+
+.section_second_top span {
+  color: #fae04e;
+}
+
+.section_second_course {
+  display: flex;
+  width: 100px;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.course_item img {
+  width: 80px;
+  padding: 0.4rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  border: 5px solid #828377;
+}
+
+.course_item {
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: rgb(231, 231, 231);
+}
+
+.section_second_bottom {
+  text-align: center;
+  color: white;
+  margin-block: 2rem;
+}
+
+.section_second_price {
+  margin-block: 1.5rem;
+}
+
+.section_second_price span {
+  font-size: 1.5rem;
+  margin-right: 2px;
+}
+
+.section_second_price h4 {
+  text-decoration: line-through;
+  font-size: 1.5rem;
+  opacity: 0.5;
+  color: #fae04e;
+}
+
+.section_second_price h3 {
+  font-size: 2.3rem;
+  color: #fae04e;
+}
+
+.section_second_description p {
+  letter-spacing: 0.1rem;
+  margin-bottom: 6px;
+}
+
+.section_second_description h1 {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 768px) {
+  .main_section_one {
+    display: block;
+    padding: 1.5rem;
+  }
+
+  .section_one_texts_title h1 {
+    font-size: 1.8rem;
+  }
+
+  .section_one_texts {
+    text-align: center;
+  }
+
+  .section_one_texts_subtitle {
+    margin-block: 2rem;
+  }
+
+  .section_one_texts_pills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    margin-block: 2rem;
+  }
+
+  .section_one_texts_pills p {
+    display: block;
+    margin-bottom: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .bubble {
+    display: none;
+  }
+
+  .worker {
+    display: none
+  }
+
+  .section_one_texts {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .main_button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  /* SECTION_SECOND */
+
+  .section_second_container {
+    padding-bottom: 2rem;
+  }
+
+  .section_second_top {
+    width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .section_second_top h3 {
+    font-size: 1.8rem;
+    width: 320px;
+    left: 0
+  }
+
+  .section_second_course {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 1.5rem 0 1.5rem;
+  }
+
+  .course_item img {
+    width: 70px;
+  }
+
+  .course_item {
+    font-size: 1.5rem;
   }
 }
