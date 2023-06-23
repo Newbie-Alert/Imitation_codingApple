@@ -3,3 +3,6 @@
 
 ## 2일 차
 ### MainPage_section 제작
+
+## 3일 차
+### MainPage_2번 section 제작, MainPage 반응형 적용
