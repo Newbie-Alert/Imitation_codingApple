@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "./Home.module.css";
-
 // data
 import pills from "./homePillsData";
 import course from "./homeEduData";
+// HOOK
+import { useSelector } from "react-redux";
 
 function Home() {
+  let states = useSelector((state) => state);
+
   return (
     <main className={`${styles.main_page_container}`}>
       {/* MAIN_SECTION_FIRST */}
@@ -83,6 +86,21 @@ function Home() {
               <h1>프리패스 Essential</h1>
             </div>
           </div>
+        </div>
+      </section>
+      {/* MAIN_SECTION_THIRD */}
+      <img src="" alt="" />
+      <section className={`${styles.section_third}`}>
+        <div className={`${styles.edu_list} ${styles.grid}`}>
+          {states.eduList.map((el, i) => {
+            return (
+              <div key={i} className={styles.section_third_edu_card}>
+                <img src={el.image} alt="" />
+                <h3>{el.title}</h3>
+                <p>{el.description}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
     </main>
