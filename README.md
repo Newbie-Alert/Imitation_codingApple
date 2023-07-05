@@ -6,3 +6,6 @@
 
 ## 3일 차
 ### MainPage_2번 section 제작, MainPage 반응형 적용
+
+## 4일 차
+### MainPage 완료
