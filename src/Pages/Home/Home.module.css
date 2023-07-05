@@ -12,6 +12,13 @@ img {
   object-fit: cover;
 }
 
+.move {
+  .move {
+    transform: translateX(-300px);
+  }
+
+}
+
 .container {
   padding: 2.5rem 2.5rem 0 2.5rem;
 }

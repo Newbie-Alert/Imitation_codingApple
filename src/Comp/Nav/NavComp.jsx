@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./NavComp.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+
+import LoginComp from "../login/LoginComp";
+import axios, { all } from "axios";
 
 function NavComp() {
   // STATE
@@ -11,12 +14,26 @@ function NavComp() {
   let [menuCount, setMenuCount] = useState(false);
   let [containerClass, setContainerClass] = useState(styles);
   let [Page, setPage] = useState([styles.now, styles, styles]);
+  let [sign, setSign] = useState(false);
+  let [loginUi, setLoginUi] = useState(false);
 
   // USER UI
   let [userUi, setUserUi] = useState(false);
 
   // HOOK
   let navi = useNavigate();
+
+  // useEffect
+  useEffect(() => {
+    const roadUserStatus = function () {
+      axios.get("http://localhost:8080/confirm").then((result) => {
+        if (result.data.activate === 1) {
+          setSign((sign = true));
+        }
+      });
+    };
+    return roadUserStatus;
+  }, []);
 
   // FUNCTION
   /** 메뉴를 클릭하면 X자 형태로 변환되는 함수 **/
@@ -52,68 +69,67 @@ function NavComp() {
   }
 
   return (
-    <div
-      className={`${styles.nav_container} ${styles.container} ${containerClass}`}
-    >
-      {userUi == true ? <UserPopup /> : null}
-      <div className={styles.nav_logo} onClick={() => navi("/")}>
-        <img src={process.env.PUBLIC_URL + "logo.png"} alt="" />
-      </div>
-      <div className={styles.nav_info}>
-        <div className={styles.nav_category}>
-          <ul>
-            <li
-              onClick={() => Pagination(0)}
-              className={`${styles.nav_category_item} ${Page[0]}`}
-            >
-              HOME
-            </li>
-            <li
-              onClick={() => Pagination(1)}
-              className={`${styles.nav_category_item} ${Page[1]}`}
-            >
-              COURSE
-            </li>
-            <li
-              onClick={() => Pagination(2)}
-              className={`${styles.nav_category_item} ${Page[2]}`}
-            >
-              ABOUT
-            </li>
-          </ul>
+    <>
+      {loginUi == true ? <LoginComp /> : null}
+      <SlideMenu containerClass={containerClass} menuAction={menuAction} />
+      <div className={`${styles.nav_container} ${styles.container}`}>
+        {userUi == true ? <UserPopup navi={navi} /> : null}
+        <div className={styles.nav_logo} onClick={() => navi("/")}>
+          <img src={process.env.PUBLIC_URL + "logo.png"} alt="" />
         </div>
-        <div className={styles.nav_user}>
-          <img
-            onClick={() => {
-              userUi === false
-                ? setUserUi((userUi = true))
-                : setUserUi((userUi = false));
-            }}
-            src={process.env.PUBLIC_URL + "user.png"}
-            alt="user_icon"
-            width={"30px"}
-          />
-          <span
-            onClick={() => {
-              userUi === false
-                ? setUserUi((userUi = true))
-                : setUserUi((userUi = false));
-            }}
-            className={styles.nav_info_name}
-            style={{ marginLeft: "9px" }}
-          >
-            user
-          </span>
-        </div>
+        <div className={styles.nav_info}>
+          <div className={styles.nav_category}>
+            <ul>
+              <li
+                onClick={() => {
+                  Pagination(0);
+                  navi("/");
+                }}
+                className={`${styles.nav_category_item} ${Page[0]}`}
+              >
+                HOME
+              </li>
+              <li
+                onClick={() => {
+                  Pagination(1);
+                  navi("/course");
+                }}
+                className={`${styles.nav_category_item} ${Page[1]}`}
+              >
+                COURSE
+              </li>
+              <li
+                onClick={() => {
+                  Pagination(2);
+                  navi("/Page");
+                }}
+                className={`${styles.nav_category_item} ${Page[2]}`}
+              >
+                ABOUT
+              </li>
+            </ul>
+          </div>
+          {sign == false ? (
+            <h4
+              onClick={() => {
+                setLoginUi(true);
+              }}
+            >
+              로그인
+            </h4>
+          ) : (
+            <UserIcon userUi={userUi} setUserUi={setUserUi} />
+          )}
 
-        <FontAwesomeIcon className={styles.icon_cart} icon={faShoppingCart} />
-        <div className={styles.nav_info_menu} onClick={menuAction}>
-          <div className={`${styles.menu} ${menuClass[0]}`}></div>
-          <div className={`${styles.menu} ${menuClass[1]}`}></div>
-          <div className={`${styles.menu} ${menuClass[2]}`}></div>
+          <FontAwesomeIcon className={styles.icon_cart} icon={faShoppingCart} />
+          <div className={styles.nav_info_menu} onClick={menuAction}>
+            <div className={`${styles.menu} ${menuClass[0]}`}></div>
+            <div className={`${styles.menu} ${menuClass[1]}`}></div>
+            <div className={`${styles.menu} ${menuClass[2]}`}></div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -128,7 +144,17 @@ function UserPopup() {
             <h3>user</h3>
             <h5>프로필 보기</h5>
           </div>
-          <h5>로그아웃</h5>
+          <h5
+            onClick={() => {
+              axios
+                .post("http://localhost:8080/logout", {
+                  data: 0,
+                })
+                .then(document.location.reload());
+            }}
+          >
+            로그아웃
+          </h5>
         </div>
       </div>
       <div className={styles.user_bottom}>
@@ -138,6 +164,48 @@ function UserPopup() {
           <li>설정</li>
         </ul>
       </div>
+    </div>
+  );
+}
+
+// Comp for NAV
+function SlideMenu({ containerClass, menuAction }) {
+  return (
+    <div className={`${styles.menu_container} ${containerClass}`}>
+      <h4
+        onClick={() => {
+          menuAction();
+        }}
+      >
+        X
+      </h4>
+    </div>
+  );
+}
+function UserIcon({ userUi, setUserUi }) {
+  return (
+    <div className={styles.nav_user}>
+      <img
+        onClick={() => {
+          userUi === false
+            ? setUserUi((userUi = true))
+            : setUserUi((userUi = false));
+        }}
+        src={process.env.PUBLIC_URL + "user.png"}
+        alt="user_icon"
+        width={"30px"}
+      />
+      <span
+        onClick={() => {
+          userUi === false
+            ? setUserUi((userUi = true))
+            : setUserUi((userUi = false));
+        }}
+        className={styles.nav_info_name}
+        style={{ marginLeft: "9px" }}
+      >
+        user
+      </span>
     </div>
   );
 }

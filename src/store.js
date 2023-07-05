@@ -91,6 +91,7 @@ let eduList = createSlice({
   ],
 });
 
+
 export default configureStore({
   reducer: {
     eduList: eduList.reducer,
