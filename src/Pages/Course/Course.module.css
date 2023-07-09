@@ -82,3 +82,36 @@
 .lists {
   padding: 2.5rem;
 }
+
+.lists_card {
+  display: flex;
+  margin-block: 1rem;
+  align-items: start;
+}
+
+.lists_card_img {
+  width: 36%;
+  border-radius: 5px;
+}
+
+.lists_card_image img {
+  width: 100%;
+  display: block;
+  border-radius: 50%;
+}
+
+.lists_card_info {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lists_card_info p {
+  font-size: 1.2rem;
+  width: 90%;
+}
+
+.lists_card_info div,
+.lists_card_info p {
+  margin-block: 0.5rem;
+}

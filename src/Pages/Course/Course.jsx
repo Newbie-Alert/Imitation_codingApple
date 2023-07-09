@@ -41,8 +41,14 @@ function Course() {
           console.log(el.image);
           return (
             <div className={styles.lists_card} key={i}>
-              <img src={`${process.env.PUBLIC_URL + el.image}`} alt="" />
-              <h1>{el.title}</h1>
+              <div className={styles.lists_card_img}>
+                <img src={`${process.env.PUBLIC_URL + el.image}`} alt="" />
+              </div>
+              <div className={styles.lists_card_info}>
+                <h2>{el.title}</h2>
+                <div className={styles.lists_card_info_review}>아직</div>
+                <p>{el.description}</p>
+              </div>
             </div>
           );
         })}

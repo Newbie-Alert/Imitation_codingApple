@@ -5,7 +5,7 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import LoginComp from "../login/LoginComp";
-import axios, { all } from "axios";
+import axios from "axios";
 
 function NavComp() {
   // STATE
@@ -25,14 +25,15 @@ function NavComp() {
 
   // useEffect
   useEffect(() => {
-    const roadUserStatus = function () {
+    // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
+    const loadUserStatus = function () {
       axios.get("http://localhost:8080/confirm").then((result) => {
         if (result.data.activate === 1) {
           setSign((sign = true));
         }
       });
     };
-    return roadUserStatus;
+    return loadUserStatus;
   }, []);
 
   // FUNCTION
@@ -56,7 +57,7 @@ function NavComp() {
       menuClass = copy;
 
       // Container 원 위치
-      setContainerClass((containerClass = styles));
+      // setContainerClass((containerClass = styles));
     }
   }
 
