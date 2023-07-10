@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 
-// COMP
-import LoginComp from "../../Comp/login/LoginComp";
-
 // data
 import pills from "./homePillsData";
 import course from "./homeEduData";
 // HOOK
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  // variables
+  let navi = useNavigate();
   let states = useSelector((state) => state);
-  useEffect(() => {
-    axios.get("http://localhost:8080/edu").then((result) => {
-      console.log(result.data);
-    });
-  }, []);
 
   return (
     <>
@@ -105,7 +100,13 @@ function Home() {
           <div className={`${styles.edu_list} ${styles.grid}`}>
             {states.eduList.map((el, i) => {
               return (
-                <div key={i} className={styles.section_third_edu_card}>
+                <div
+                  key={i}
+                  className={styles.section_third_edu_card}
+                  onClick={() => {
+                    navi(`/detail/${el.id}`);
+                  }}
+                >
                   <img src={el.image} alt="" />
                   <h3>{el.title}</h3>
                   <p>{el.description}</p>

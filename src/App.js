@@ -10,6 +10,8 @@ import Course from './Pages/Course/Course';
 import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
+import Detail from './Pages/Detail/Detail';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/course' element={<Course />} />
+        <Route path='detail/:id' element={<Detail />} />
       </Routes>
     </div>
   );

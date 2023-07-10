@@ -276,6 +276,14 @@ img {
 
 .section_third_edu_card {
   text-align: center;
+  border: 1px solid #eee;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.section_third_edu_card:hover {
+  transform: scale(0.95);
 }
 
 .section_third_edu_card h3 {
