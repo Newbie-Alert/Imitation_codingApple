@@ -6,7 +6,6 @@ import pills from "./homePillsData";
 import course from "./homeEduData";
 // HOOK
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Home() {

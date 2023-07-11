@@ -76,7 +76,7 @@ function NavComp() {
       <div className={`${styles.nav_container} ${styles.container}`}>
         {userUi == true ? <UserPopup navi={navi} /> : null}
         <div className={styles.nav_logo} onClick={() => navi("/")}>
-          <img src={process.env.PUBLIC_URL + "logo.png"} alt="" />
+          <img src={process.env.PUBLIC_URL + "/logo.png"} alt="" />
         </div>
         <div className={styles.nav_info}>
           <div className={styles.nav_category}>
