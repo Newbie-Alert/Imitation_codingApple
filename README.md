@@ -81,3 +81,71 @@
   `url parameter`를 사용한 API로 데이터를 받아올 수 있게 수정하였더니 해결됐다.  
   서버에서 처리 하는 방식은 같은데  
   왜 url parameter를 사용하는 페이지에서는 새로고침 할 때마다 useEffect가 작동하지 않았었는지 아직 이유는 잘 모르겠다.....🤔🤔🤔🤔🤔🤔
+
+## 10일 차
+
+### 산 넘어 산 \_ DB의 데이터들
+
+8일 차에서 조금 막혔다가 해결하고 넘어오니  
+이번엔 DB에 할 일이 많아 속도가 더뎌졌다.  
+Detail Page에 정보가 상당히 많이 들어간다.  
+처음에는 간단히 생각하고 주먹구구 식으로 DB를 만들었는데  
+강좌의 커리큘럼 테이블에 들어갈 정보들,  
+리뷰단에 들어갈 리뷰 데이터들까지..  
+리뷰는 리뷰를 강좌 카테고리별로 나눠야하고,
+할 일이 많아서 머리가 복잡하다.  
+프론트도 bootstrap을 사용하지 않고 만들고 있지만 언젠가 bootstrap을 써야할 수도 있을 거 같다.
+
+### 문제와 해결
+
+### Html parsing
+
+DB에서 커다란 `String`형태의 `html`자료를 리액트에 바인딩 해보니  
+아래와 같이 String 형태로 나오는 문제가 있었다.
+
+```
+<p>&nbsp;</p>
+<p>Next.js는 프론트엔드부터 서버까지 만들 수 있는 React기반 프레임워크입니다.</p>
+<p>이것만 사용해도 풀스택 웹개발이 가능합니다.&nbsp;</p>
+<p>&nbsp;</p>
+<p>Next.js 사용시 서버사이드 렌더링이 쉽기 때문에&nbsp;</p>
+```
+
+구글링을 해보니 `String형태의 html`을 `html로 렌더`해서 출력해주는 라이브러에 대해 알게 됐다.
+`react-html-parser` 라는 라이브러리였는데
+사용법과 효과는 아래와 같았다.
+
+### react-html-parser 사용법
+
+```javascript
+<detail.jsx 코드>
+
+import {HtmlParser} from "react-html-parser";
+
+// main
+function Detail(){
+  return(
+    ~~~~~
+  )
+}
+
+// component
+function TAB({ data }) {
+  // string 형태의 html을 변수에 담고
+  const htmlString = data.about;
+  // htmlParser() 안에 앞서 만든 변수를 인자로 보낸다
+  return <div className={styles.tab}>{HtmlParser(htmlString)}</div>;
+}
+```
+
+### react-html-parser 적용 후 결과
+
+```txt
+Next.js는 프론트엔드부터 서버까지 만들 수 있는 React기반 프레임워크입니다.
+
+이것만 사용해도 풀스택 웹개발이 가능합니다.
+
+
+
+Next.js 사용시 서버사이드 렌더링이 쉽기 때문에
+```

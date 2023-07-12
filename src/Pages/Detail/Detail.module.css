@@ -5,12 +5,20 @@
 }
 
 .container {
-  padding: 2.5rem;
+  padding: 2.5rem 15%;
 }
 
 .detail_container {
   width: 100%;
 }
+
+.detail_main {
+  display: flex;
+  min-width: 700px;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
 
 .detail_top_review {
   width: 300px;
@@ -30,4 +38,115 @@
 .student h5 {
   margin-left: 9px;
   color: #757575;
+}
+
+.detail_main_left {
+  min-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail_main_left img {
+  border-radius: 9px;
+}
+
+.detail_main_left_tab {
+  width: 100%;
+  display: flex;
+  padding: 1.2rem 1rem;
+  background-color: #FAFAFA;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+}
+
+.detail_main_left_tab h4 {
+  width: 50px;
+}
+
+.detail_main_right {
+  min-width: 30%;
+}
+
+.detail_right_top {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.detail_right_top_btn,
+.detail_right_top_price,
+.detail_right_top_date {
+  padding: 1rem 0.5rem;
+}
+
+.detail_right_top_btn button {
+  width: 100%;
+  padding: 2rem 3rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #FF5554;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.detail_right_top_price {
+  position: relative;
+  padding: 0.3rem;
+  margin-bottom: 6px;
+}
+
+.detail_right_top_date {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail_right_top_price::after,
+.detail_right_top_date::after {
+  content: '';
+  height: 1px;
+  bottom: -5px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: #eee;
+}
+
+.detail_right_mid {
+  text-align: center;
+  padding: 2rem;
+}
+
+.detail_right_mid h3 {
+  position: relative;
+  color: #5c5c5c;
+}
+
+.detail_right_mid h3::after {
+  position: absolute;
+  content: '';
+  width: 80%;
+  height: 1px;
+  left: 51%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  bottom: -9px;
+  background-color: #a0a0a0;
+}
+
+.detail_right_bot {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+}
+
+.tab {
+  line-height: 2rem;
 }
