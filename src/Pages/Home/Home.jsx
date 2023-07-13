@@ -62,7 +62,7 @@ function Home() {
           <div className={styles.section_second}>
             <div className={styles.section_second_top}>
               <h3>
-                수박코딩 웹개발 <span>프리패스</span>
+                코딩사과 웹개발 <span>프리패스</span>
               </h3>
               <img src={process.env.PUBLIC_URL + "present.png"} alt="" />
             </div>
