@@ -171,3 +171,60 @@ Next.js 사용시 서버사이드 렌더링이 쉽기 때문에
 - DB에 리뷰처럼 보일 데이터를 구축
 - 실제 리뷰를 작성할 때 리뷰의 개수와 평점, 고유 ID를 부여할 collection 생성
 - 리뷰 데이터를 가져와 detail page UI에 렌더
+
+## 12일 차
+
+### 추가된 부분
+
+- 리뷰 섹션 추가
+- DB에 리뷰, 리뷰 관리 데이터 구축
+- detail page 반응형으로 수정
+
+### DB 구축
+
+- DB는 review, reviewCount 컬렉션을 생성하여  
+  각각 리뷰와 리뷰 갯수, 점수등을 기록하도록 구축하였다.
+- `url parameter`를 사용하여 해당 과목의 디테일 페이지에서 해당 과목의 데이터를 찾아서 가져오기 유용하도록 데이터에 고유 id를 부여
+
+```javascript
+
+<Detail.jsx 의 useEffect의 get요청>
+// axios all을 사용하여 여러 개의 데이터를 가져오도록 하였다.
+
+axios.all([
+  axios.get(`http://localhost:8080/reviews/${id.id}`),
+  axios.get(`http://localhost:8080/count/${id.id}`),
+])
+.then(
+  axios.spread((res1, res2) => {
+    setReviews(res1.data.review);
+    setReviewCount(res2.data.count);
+  })
+);
+
+
+
+<server.js>
+
+app.get("/reviews/:id", function (req, res) {
+  db.collection(`reviews`).findOne(
+    { id: parseInt(req.params.id) },
+    function (err, result) {
+      res.json(result);
+    }
+  );
+});
+
+app.get("/count/:id", function (req, res) {
+  db.collection(`reviewCount`).findOne(
+    { id: parseInt(req.params.id) },
+    function (err, result) {
+      res.json(result);
+    }
+  );
+});
+```
+
+### 남은 것
+
+- 이제 게시판, 강의 재생 페이지, 카트/구매 기능이 남았다...!

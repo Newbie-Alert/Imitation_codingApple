@@ -20,33 +20,48 @@ function Detail() {
   let [lessonTwo, setLessonTwo] = useState([]);
   let [showLesson, setShowLesson] = useState(["show", "hide"]);
   let ReapeatStar = [1, 2, 3, 4, 5];
+  let [reviews, setReviews] = useState([]);
+  let [reviewCount, setReviewCount] = useState();
+
+  // HOOK
+  let navi = useNavigate();
+  let id = useParams();
+  useEffect(() => {
+    // 해당 페이지 강의 리스트
+    axios.get(`http://localhost:8080/detail/${id.id}`).then((result) => {
+      setDetail(result.data);
+      setLesson(result.data.chapter);
+      setLessonTwo(result.data.chapter2);
+
+      // 해당 강좌 리뷰, 리뷰 관련 정보
+      axios
+        .all([
+          axios.get(`http://localhost:8080/reviews/${id.id}`),
+          axios.get(`http://localhost:8080/count/${id.id}`),
+        ])
+        .then(
+          axios.spread((res1, res2) => {
+            setReviews(res1.data.review);
+            setReviewCount(res2.data.count);
+          })
+        );
+    });
+  }, []);
 
   // UI관련 Fx
   /** 강좌 리스트 UI 스위치 인자로 0 || 1을 갖는다 */
   function showAndHide(num) {
-    if (showLesson[num] == "hide") {
+    if (showLesson[num] === "hide") {
       let copy = [...showLesson];
       copy[num] = "show";
       setShowLesson(copy);
     }
-    if (showLesson[num] == "show") {
+    if (showLesson[num] === "show") {
       let copy = [...showLesson];
       copy[num] = "hide";
       setShowLesson(copy);
     }
   }
-
-  // HOOK
-  let id = useParams();
-  useEffect(() => {
-    axios.get(`http://localhost:8080/detail/${id.id}`).then((result) => {
-      setDetail(result.data);
-      setLesson(result.data.chapter);
-      setLessonTwo(result.data.chapter2);
-    });
-  }, []);
-
-  let navi = useNavigate();
 
   return (
     <div className={`${styles.container} ${styles.detail_container}`}>
@@ -116,6 +131,13 @@ function Detail() {
         </div>
       </div>
       <TAB detail={detail} />
+
+      {/* Curriculum */}
+      <div className={styles.curri_line}>
+        <div className={styles.curri_text}>
+          <h3>커리큘럼</h3>
+        </div>
+      </div>
       <div className={styles.curriculum}>
         <table className={styles.carri_one}>
           <tbody>
@@ -155,6 +177,34 @@ function Detail() {
             {showLesson[1] == "show" ? <TABLE2 lessonTwo={lessonTwo} /> : null}
           </tbody>
         </table>
+      </div>
+
+      {/* REVIEW */}
+      <div className={styles.review_line}>
+        <div className={styles.review_text}>
+          <h3>수강생 리뷰</h3>
+        </div>
+      </div>
+      <div className={styles.review_score}>
+        <h2>평균</h2>
+        <div>
+          {ReapeatStar.map((i) => {
+            return (
+              <FontAwesomeIcon
+                key={i}
+                icon={faStar}
+                style={{ color: "#ffdd33" }}
+              />
+            );
+          })}
+        </div>
+
+        <h4>{`${detail.review} ratings `}</h4>
+      </div>
+      <div className={styles.review_tab}>
+        <div className={styles.review_container}>
+          <REVIEWS reviews={reviews} ReapeatStar={ReapeatStar} />
+        </div>
       </div>
     </div>
   );
@@ -206,6 +256,37 @@ function TABLE2({ lessonTwo }) {
             </td>
             <td className={styles.carri_duration}>{el.duration}</td>
           </tr>
+        );
+      })}
+    </>
+  );
+}
+
+function REVIEWS({ reviews, ReapeatStar }) {
+  return (
+    <>
+      {reviews.map((el, i) => {
+        return (
+          <div key={i} className={styles.review_box}>
+            <div className={styles.review_user_profile}>
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            <div className={styles.review_content}>
+              <h4>{el.title}</h4>
+              <div>
+                {ReapeatStar.map((i) => {
+                  return (
+                    <FontAwesomeIcon
+                      key={i}
+                      icon={faStar}
+                      style={{ color: "#ffdd33" }}
+                    />
+                  );
+                })}
+              </div>
+              <p>{el.review}</p>
+            </div>
+          </div>
         );
       })}
     </>

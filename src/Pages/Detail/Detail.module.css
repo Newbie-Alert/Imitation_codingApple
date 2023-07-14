@@ -4,7 +4,17 @@
   box-sizing: border-box;
 }
 
+.two {
+  margin-top: 15px;
+}
 
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
 
 .container {
   padding: 2.5rem 15%;
@@ -153,6 +163,20 @@
   line-height: 2rem;
 }
 
+/* CURRICULUM */
+
+.curri_line {
+  width: 100%;
+  border-bottom: 2px solid #dbdbdb;
+  margin-bottom: 12px;
+}
+
+.curri_text {
+  padding: 0.6rem;
+  width: 100px;
+  border-bottom: 2px solid #FF5554;
+}
+
 .curriculum {
   width: 100%;
 }
@@ -208,14 +232,109 @@
   padding: 0.3rem 0.1rem;
 }
 
-.two {
-  margin-top: 15px;
+/* REVIEW */
+.review_line {
+  width: 100%;
+  border-bottom: 2px solid #dbdbdb;
+  margin-bottom: 12px;
 }
 
-.show {
-  display: block;
+.review_text {
+  margin-top: 2rem;
+  padding: 0.6rem;
+  width: 110px;
+  border-bottom: 2px solid #FF5554;
 }
 
-.hide {
-  display: none;
+.review_score {
+  margin-top: 1.2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.review_score h4 {
+  color: #5c5c5c;
+}
+
+.review_tab {
+  width: 100%;
+}
+
+.review_container {
+  width: 100%;
+}
+
+.review_box {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+}
+
+.review_box p {
+  padding: 1rem 0;
+  line-height: 1.5rem;
+  width: 70%;
+}
+
+.review_user_profile {
+  text-align: center;
+  font-size: 2rem;
+  padding-top: 0.75rem;
+  width: 60px;
+  height: 60px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.review_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 80%;
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 768px) {
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  .detail_top_review {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-block: 1rem;
+  }
+
+  .detail_main {
+    display: block;
+    min-width: 100%;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+
+  .detail_main_left {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+
+  .review_box p {
+    padding: 1rem 0;
+    line-height: 1.5rem;
+    width: 100%;
+  }
 }
