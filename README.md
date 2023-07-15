@@ -228,3 +228,69 @@ app.get("/count/:id", function (req, res) {
 ### 남은 것
 
 - 이제 게시판, 강의 재생 페이지, 카트/구매 기능이 남았다...!
+
+## 12일 차
+
+### 강좌 평균점수에 따라 별점이 표기되도록 하였다
+
+- CSS 의 `mix-blend-mode`를 통해 배경의 `width`에 따라 별의 색상이 변경되게 한 후  
+   배경의 `width 값`에 평균 값을 주게 되면 이렇게 된다!!
+
+  ## 1시간 정도 헤맨 거 같다 😗
+
+  ```CSS
+  <CSS>
+
+  .star_box {
+  width: fit-content;
+  height: 20px;
+  background-image: url("https://dummyimage.com/1000/fcd62d.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+  }
+
+  .star_box div {
+  mix-blend-mode: screen;
+  color: black;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  }
+  ```
+
+  ```javascript
+  <Detail.jsx>
+
+  function STAR({ ReapeatStar, average }) {
+  return (
+    <div
+      className={styles.star_box}
+      style={{ backgroundSize: `${average}% 20px` }}
+    >
+      <div>
+        {ReapeatStar.map((i) => {
+          return (
+            <FontAwesomeIcon key={i} icon={faStar} className={styles.star} />
+          );
+        })}
+      </div>
+    </div>
+  );
+  }
+  ```
+
+### 따란-
+
+평균이 50일 때의 별점이 표기되는 모습
+
+![img](./mdImg/star.png)
+
+## 문제였던 것
+
+- 분명 배경은 너비가 50% 인데 자꾸 별점은 54% 정도로 나오는 것.
+
+## 해결
+
+- 별점 `div` 자체의 width를 `fit-content`로 하여  
+  div 안의 요소인 `별 5개 만큼의 너비`를 주어 너비를 같게 하였다.

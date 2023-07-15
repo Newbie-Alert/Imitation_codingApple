@@ -22,6 +22,11 @@ function Detail() {
   let ReapeatStar = [1, 2, 3, 4, 5];
   let [reviews, setReviews] = useState([]);
   let [reviewCount, setReviewCount] = useState();
+  let average = 50;
+  let score = [];
+  reviews.map((el, i) => {
+    score.push(el.score);
+  });
 
   // HOOK
   let navi = useNavigate();
@@ -206,6 +211,7 @@ function Detail() {
           <REVIEWS reviews={reviews} ReapeatStar={ReapeatStar} />
         </div>
       </div>
+      <STAR ReapeatStar={ReapeatStar} average={average} />
     </div>
   );
 }
@@ -279,6 +285,7 @@ function REVIEWS({ reviews, ReapeatStar }) {
                     <FontAwesomeIcon
                       key={i}
                       icon={faStar}
+                      className={styles.star}
                       style={{ color: "#ffdd33" }}
                     />
                   );
@@ -290,6 +297,23 @@ function REVIEWS({ reviews, ReapeatStar }) {
         );
       })}
     </>
+  );
+}
+
+function STAR({ ReapeatStar, average }) {
+  return (
+    <div
+      className={styles.star_box}
+      style={{ backgroundSize: `${average}% 20px` }}
+    >
+      <div>
+        {ReapeatStar.map((i) => {
+          return (
+            <FontAwesomeIcon key={i} icon={faStar} className={styles.star} />
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
