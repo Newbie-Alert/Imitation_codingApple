@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./NavComp.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import LoginComp from "../login/LoginComp";
 import axios from "axios";
@@ -13,16 +13,16 @@ function NavComp() {
   let [menuClass, setMenu] = useState([styles, styles, styles]);
   let [menuCount, setMenuCount] = useState(false);
   let [containerClass, setContainerClass] = useState(styles);
-  let [Page, setPage] = useState([styles.now, styles, styles]);
   let [sign, setSign] = useState(false);
   let [loginUi, setLoginUi] = useState(false);
+  let [current, setCurrent] = useState(styles.active);
 
   // USER UI
   let [userUi, setUserUi] = useState(false);
 
   // HOOK
   let navi = useNavigate();
-
+  let [page, setPage] = useState();
   // useEffect
   useEffect(() => {
     // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
@@ -61,14 +61,6 @@ function NavComp() {
     }
   }
 
-  /** Nav의 현재 페이지를 빨갛게 표기하는 함수 **/
-  function Pagination(listNum) {
-    setPage((Page = [styles, styles, styles]));
-    let copy = [...Page];
-    copy[listNum] = styles.now;
-    setPage(copy);
-  }
-
   return (
     <>
       {loginUi == true ? <LoginComp /> : null}
@@ -83,28 +75,33 @@ function NavComp() {
             <ul>
               <li
                 onClick={() => {
-                  Pagination(0);
+                  setPage(0);
                   navi("/");
                 }}
-                className={`${styles.nav_category_item} ${Page[0]}`}
+                className={`${styles.nav_category_item} ${
+                  page == 0 ? current : null
+                }`}
               >
                 HOME
               </li>
               <li
                 onClick={() => {
-                  Pagination(1);
+                  setPage(1);
                   navi("/course");
                 }}
-                className={`${styles.nav_category_item} ${Page[1]}`}
+                className={`${styles.nav_category_item} ${
+                  page == 1 ? current : null
+                } `}
               >
                 COURSE
               </li>
               <li
                 onClick={() => {
-                  Pagination(2);
-                  navi("/Page");
+                  setPage(2);
+                  navi("/page");
                 }}
-                className={`${styles.nav_category_item} ${Page[2]}`}
+                className={`${styles.nav_category_item}
+                ${page == 2 ? current : null} `}
               >
                 ABOUT
               </li>

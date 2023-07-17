@@ -22,11 +22,16 @@ function Detail() {
   let ReapeatStar = [1, 2, 3, 4, 5];
   let [reviews, setReviews] = useState([]);
   let [reviewCount, setReviewCount] = useState();
-  let average = 50;
   let score = [];
   reviews.map((el, i) => {
     score.push(el.score);
   });
+  let average = 0;
+  score.forEach((el) => {
+    average += el;
+  });
+  average = average / reviewCount;
+  let [title, setTitle] = useState("");
 
   // HOOK
   let navi = useNavigate();
@@ -37,7 +42,6 @@ function Detail() {
       setDetail(result.data);
       setLesson(result.data.chapter);
       setLessonTwo(result.data.chapter2);
-
       // 해당 강좌 리뷰, 리뷰 관련 정보
       axios
         .all([
@@ -48,11 +52,12 @@ function Detail() {
           axios.spread((res1, res2) => {
             setReviews(res1.data.review);
             setReviewCount(res2.data.count);
+            setTitle(res2.data.name);
           })
         );
     });
   }, []);
-
+  console.log(title);
   // UI관련 Fx
   /** 강좌 리스트 UI 스위치 인자로 0 || 1을 갖는다 */
   function showAndHide(num) {
@@ -104,7 +109,7 @@ function Detail() {
             </h4>
             <h4
               onClick={() => {
-                navi(`/board/${id.id}`);
+                navi(`/board/${title}/${id.id}`);
               }}
             >
               게시판
@@ -191,7 +196,7 @@ function Detail() {
         </div>
       </div>
       <div className={styles.review_score}>
-        <h2>평균</h2>
+        <h2>{average.toFixed(1)}</h2>
         <div>
           {ReapeatStar.map((i) => {
             return (
@@ -211,7 +216,6 @@ function Detail() {
           <REVIEWS reviews={reviews} ReapeatStar={ReapeatStar} />
         </div>
       </div>
-      <STAR ReapeatStar={ReapeatStar} average={average} />
     </div>
   );
 }

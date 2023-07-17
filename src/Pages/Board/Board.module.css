@@ -1,0 +1,134 @@
+.board_top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+  background-color: #f7f7f7;
+  padding: 2.5rem 6rem;
+}
+
+.board_top button {
+  padding: 0.8rem 5rem;
+  border-radius: 5px;
+  border: none;
+  color: #FF5554;
+  border: 1px solid #FF5554;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.board_top button:hover {
+  color: white;
+  background-color: #FF5554;
+}
+
+.board_main {
+  padding: 2.5rem 6rem;
+}
+
+.board_search_write {
+  display: flex;
+  justify-content: space-between;
+}
+
+.board_search_write input {
+  padding: 0.3rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid #d8d8d8;
+}
+
+.board_search_write input {
+  margin-right: 0.3rem;
+}
+
+.board_search_write button {
+  padding: 0.3rem 1rem;
+  background-color: transparent;
+  border-radius: 3px;
+  color: #FF5554;
+  border: 1px solid #FF5554;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.board_search_write button:hover {
+  color: white;
+  background-color: #FF5554;
+}
+
+.board_content {
+  margin-top: 3rem;
+  border: 2px solid #eee;
+  border-radius: 5px;
+  padding: 0.5rem 0.5rem;
+}
+
+.board_content li {
+  list-style: none;
+  padding: 0.7rem 0.3rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.board_content_head {
+  cursor: text;
+  list-style: none;
+  padding: 0.7rem 0.3rem;
+  border-bottom: 1px solid #eee;
+}
+
+
+
+/* WRITE FORM */
+
+.write_form {
+  padding: 2.5rem 2rem;
+  width: 100%;
+  border: 1px solid #d8d8d8;
+  margin-top: 2rem;
+}
+
+.write_form_top {
+  display: flex;
+  align-items: baseline;
+}
+
+.write_form_top h2 {
+  margin-right: 9px;
+}
+
+.write_input {
+  margin-top: 1rem;
+  border: 1px solid #eee;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.write_input input,
+.write_input textarea {
+  padding: 0.5rem 0.5rem;
+}
+
+.write_input div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.submit button {
+  background-color: transparent;
+  border-radius: 3px;
+  color: #FF5554;
+  border: 1px solid #FF5554;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit button:hover {
+  color: white;
+  background-color: #FF5554;
+}

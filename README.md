@@ -294,3 +294,89 @@ app.get("/count/:id", function (req, res) {
 
 - 별점 `div` 자체의 width를 `fit-content`로 하여  
   div 안의 요소인 `별 5개 만큼의 너비`를 주어 너비를 같게 하였다.
+
+## 13일 차
+
+### 추가 된 기능
+
+- 게시판 글 게시 기능 추가
+- 게시판 글 Page 완성
+
+## 문제였던 것
+
+- API를 만드는데 머리가 조금 복잡했다.
+
+## 해결방안
+
+- API에 `url parameter`를 두 개 전달하여  
+  /게시판/`'강좌 이름(param 1)'` / `게시글 고유의 id(param 2)` 이런 식으로 작동하게 하여 게시판 각각의 게시글 상세페이지를 완성했다.
+
+```javascript
+//============
+// BOARD PAGE
+//============
+
+// 게시판이 마운트 될 때 실행되는 코드
+// 게시판 리스트 UI에 바인딩 되는 data를 가져옴
+// /board/Nextjs/0 이런 식
+app.get("/board/:id1/:id2", function (req, res) {
+  // 강좌 마다 고유의 코드가 있는데 페이지와 일치하는 정보를 가져오기 위해 사용했다.
+  db.collection(`board`).findOne(
+    { _id: parseInt(req.params.id2) },
+    function (err, result) {
+      res.json(result);
+    }
+  );
+});
+
+// 게시판에 글쓰기 기능
+// 해당 강좌 DB collection의 obj 속
+// board 배열 안에 post요청한 데이터를 push
+app.post("/board/post/:id", function (req, res) {
+  db.collection("boardCount").findOne(
+    { title: req.params.id },
+    function (err, result1) {
+      db.collection("board").updateOne(
+        { title: req.params.id },
+        {
+          $push: {
+            board: {
+              id: result1.count + 1,
+              title: req.body.write_form_title,
+              content: req.body.write_form_content,
+            },
+          },
+        },
+        function (err, result3) {
+          console.log(result3);
+          res.redirect("http://localhost:3000/board/nextjs/0");
+        }
+      );
+    }
+  );
+  // 해당 강좌의 총 게시물 개수 1 증가
+  db.collection("boardCount").updateOne(
+    { title: req.params.id },
+    { $inc: { count: 1 } },
+    function (err, result) {
+      console.log("게시물 업뎃 완료");
+    }
+  );
+});
+
+// 게시판 글 각각의 상세페이지
+app.get("/board/content/:id1/:id2", function (req, res) {
+  db.collection("board").findOne(
+    { title: req.params.id1 },
+    function (err, result) {
+      res.json(result.board);
+    }
+  );
+});
+```
+
+## 배운 것
+
+- 조금 더 심도있는 통신 구조를 만들어봐서 경험치가 늘었다.
+- updateOne()의 `$push` operator에 대해 알게 되서 좋았다.
+- .env 파일을 통해 배포 후 서버와 통신이 안 되는 것을 방지하는 것에 대해 학습했다.
