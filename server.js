@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
+require('dotenv').config()
 
 // login 관련 라이브러리
 const passport = require('passport');
@@ -25,22 +26,17 @@ app.use(express.static(path.join(__dirname, "/codingabbble/build")));
 app.use(express.urlencoded({ extended: true }));
 
 let db;
-MongoClient.connect('mongodb+srv://choonsik:sdfg1234@cluster0.4zhmecf.mongodb.net/?retryWrites=true&w=majority', function (err, client) {
+MongoClient.connect(process.env.DB_URL, function (err, client) {
   if (err) {
     return console.log(err);
   }
 
   db = client.db('apple');
 
-  app.listen(8080, function () {
+  app.listen(process.env.PORT, function () {
     console.log('listening on 8080');
   })
 
-  app.get('/edu', function (req, res) {
-    db.collection('data').findOne({ name: '이거 맞나' }, function (err, result) {
-      res.json(result);
-    })
-  })
 
   // /login으로 POST 요청을 하면 미들웨어를 통한 유저 검증 후 콜백함수가 진행된다
   app.post('/login', passport.authenticate('local', {
@@ -118,9 +114,76 @@ MongoClient.connect('mongodb+srv://choonsik:sdfg1234@cluster0.4zhmecf.mongodb.ne
     })
   })
 
+  //=============
+  // DETAIL PAGE
+  //=============
   app.get('/detail/:id', function (req, res) {
     db.collection('data').findOne({ id: parseInt(req.params.id) }, function (err, result) {
       res.json(result)
+    })
+  })
+
+  app.get('/reviews/:id', function (req, res) {
+    db.collection(`reviews`).findOne({ id: parseInt(req.params.id) }, function (err, result) {
+      res.json(result);
+    })
+  })
+
+  app.get('/count/:id', function (req, res) {
+    db.collection(`reviewCount`).findOne({ id: parseInt(req.params.id) }, function (err, result) {
+      res.json(result);
+    })
+  })
+
+  app.post('/add', function (req, res) {
+    db.collection('cart').insertOne({ id: req.body.id, lesson: req.body.name, price: req.body.price, quantity: parseInt(req.body.quantity) }, function (err, result) {
+      console.log('추가 완료')
+    })
+  })
+
+
+  //============
+  // BOARD PAGE
+  //============
+
+  app.get('/board/:id1/:id2', function (req, res) {
+    db.collection(`board`).findOne({ _id: parseInt(req.params.id2) }, function (err, result) {
+      res.json(result);
+    })
+  })
+
+  app.post('/board/post/:id', function (req, res) {
+    db.collection('boardCount').findOne({ title: req.params.id }, function (err, result1) {
+      db.collection('board').updateOne({ title: req.params.id }, { $push: { board: { id: result1.count + 1, title: req.body.write_form_title, content: req.body.write_form_content } } }, function (err, result3) {
+        console.log(result3)
+        res.redirect('http://localhost:3000/board/nextjs/0')
+      })
+    })
+    db.collection('boardCount').updateOne({ title: req.params.id }, { $inc: { count: 1 } }, function (err, result) {
+      console.log('게시물 업뎃 완료')
+    })
+  })
+
+  app.get('/board/content/:id1/:id2', function (req, res) {
+    db.collection('board').findOne({ title: req.params.id1 }, function (err, result) {
+      res.json(result.board);
+    })
+  })
+
+  //============
+  // CART PAGE
+  //============
+
+  app.get('/cart', function (req, res) {
+    db.collection('cart').find().toArray(function (err, result) {
+      res.json(result);
+    })
+  })
+
+  app.post('/delete', function (req, res) {
+    console.log(req.body.id)
+    db.collection('cart').deleteOne({ id: req.body.id }, function (err, result) {
+      console.log('삭제~')
     })
   })
 
@@ -128,7 +191,6 @@ MongoClient.connect('mongodb+srv://choonsik:sdfg1234@cluster0.4zhmecf.mongodb.ne
 
 
 })
-
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
@@ -138,4 +200,5 @@ app.get('/', function (req, res) {
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, ''))
 })
+
 
