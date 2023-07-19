@@ -296,7 +296,7 @@ img {
 
 
 
-/* RESPONSIVE */
+/* ############ RESPONSIVE ############## */
 
 @media screen and (max-width: 768px) {
   .main_section_one {
@@ -387,7 +387,7 @@ img {
   /* SECTION_THIRD */
 
   .section_third {
-    padding: 7rem;
+    padding: 2rem 2.5rem;
   }
 
   .edu_list {

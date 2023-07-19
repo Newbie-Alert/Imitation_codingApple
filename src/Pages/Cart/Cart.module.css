@@ -1,0 +1,83 @@
+.fade {
+  display: none;
+}
+
+
+.cart_top {
+  padding: 2.5rem 4rem;
+  background-color: #f7f7f7;
+}
+
+.cart_table table {
+  width: 70%;
+  text-align: left;
+}
+
+.cart_table th {
+  padding: 0.8rem;
+  border-bottom: 2px solid #eee;
+}
+
+.cart_body td {
+  padding: 1rem 0.8rem;
+  width: 200px;
+  border-bottom: 2px solid #eee;
+}
+
+.cart_table {
+  display: flex;
+  align-items: start;
+  gap: 2.5rem;
+  padding: 0 3rem;
+  margin-top: 1rem;
+}
+
+.cart_body .cart_button {
+  width: 50px;
+  text-align: center;
+}
+
+.cart_button button {
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+
+.bill {
+  width: 25%;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(1, 2fr);
+  border: 1px solid #eee;
+  padding: 1rem;
+}
+
+.bill div {
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.bill_total {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bill button {
+  padding: 1.25rem;
+  border: 1px solid rgb(255, 78, 78);
+  border-radius: 5px;
+  color: rgb(255, 78, 78);
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.bill button:hover {
+  background-color: rgb(255, 78, 78);
+  color: white;
+}

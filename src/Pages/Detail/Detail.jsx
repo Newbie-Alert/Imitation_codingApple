@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HtmlParser from "react-html-parser";
 import styles from "./Detail.module.css";
+import Cart from "../Cart/Cart";
 
 function Detail() {
   // STATE
@@ -56,8 +57,8 @@ function Detail() {
           })
         );
     });
-  }, []);
-  console.log(title);
+  }, [Cart]);
+
   // UI관련 Fx
   /** 강좌 리스트 UI 스위치 인자로 0 || 1을 갖는다 */
   function showAndHide(num) {
@@ -119,13 +120,26 @@ function Detail() {
         <div className={styles.detail_main_right}>
           <div className={styles.detail_right_top}>
             <div className={styles.detail_right_top_btn}>
-              <button>신청하기</button>
+              <button
+                onClick={() => {
+                  axios
+                    .post("http://localhost:8080/add", {
+                      id: parseInt(id.id),
+                      name: detail.title,
+                      price: parseInt(detail.price),
+                      quantity: 1,
+                    })
+                    .then(navi("/cart"));
+                }}
+              >
+                신청하기
+              </button>
             </div>
             <div className={styles.detail_right_top_price}>
               <h4 style={{ textDecoration: "line-through", color: "#AFAFAF" }}>
                 현장 강의: 160,000원
               </h4>
-              <h4>75,000원</h4>
+              <h4>{detail.price}원</h4>
             </div>
             <div className={styles.detail_right_top_date}>
               <h4>365 DAYS</h4>

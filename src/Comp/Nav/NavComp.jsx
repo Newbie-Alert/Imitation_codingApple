@@ -23,16 +23,20 @@ function NavComp() {
   // HOOK
   let navi = useNavigate();
   let [page, setPage] = useState();
+  let [cartItem, setCart] = useState(null);
   // useEffect
   useEffect(() => {
     // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
     const loadUserStatus = function () {
       axios.get("http://localhost:8080/confirm").then((result) => {
-        if (result.data.activate === 1) {
+        if (result.data.activate > 0) {
           setSign((sign = true));
         }
       });
     };
+    axios.get("http://localhost:8080/cart").then((result) => {
+      setCart((cartItem = result.data));
+    });
     return loadUserStatus;
   }, []);
 
@@ -118,8 +122,20 @@ function NavComp() {
           ) : (
             <UserIcon userUi={userUi} setUserUi={setUserUi} />
           )}
-
-          <FontAwesomeIcon className={styles.icon_cart} icon={faShoppingCart} />
+          <div className={styles.cart}>
+            <FontAwesomeIcon
+              onClick={() => {
+                navi("/cart");
+              }}
+              className={styles.icon_cart}
+              icon={faShoppingCart}
+            />
+            {cartItem !== null && cartItem.length > 0 ? (
+              <div className={styles.cart_item}>
+                <p>{cartItem.length}</p>
+              </div>
+            ) : null}
+          </div>
           <div className={styles.nav_info_menu} onClick={menuAction}>
             <div className={`${styles.menu} ${menuClass[0]}`}></div>
             <div className={`${styles.menu} ${menuClass[1]}`}></div>
