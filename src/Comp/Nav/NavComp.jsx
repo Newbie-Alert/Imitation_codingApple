@@ -16,6 +16,7 @@ function NavComp() {
   let [sign, setSign] = useState(false);
   let [loginUi, setLoginUi] = useState(false);
   let [current, setCurrent] = useState(styles.active);
+  let [slide, setSlide] = useState(styles);
 
   // USER UI
   let [userUi, setUserUi] = useState(false);
@@ -53,9 +54,10 @@ function NavComp() {
       let copy = [...menuClass];
       setMenu((copy = [styles.menu_left, styles.menu_right, styles.menu_none]));
       menuClass = copy;
+      setSlide((slide = styles.slide));
 
       // Container 좌로 이동
-      setContainerClass((containerClass = styles.move));
+      // setContainerClass((containerClass = styles.move));
     }
     // 메뉴 햄버거 원위치
     else if (menuCount === true) {
@@ -71,6 +73,30 @@ function NavComp() {
 
   return (
     <>
+      <div className={`${styles.responsive_menu} ${slide}`}>
+        <h1
+          onClick={() => {
+            setSlide((slide = styles));
+            setMenuCount((menuCount = false));
+            let copy = [...menuClass];
+            setMenu((copy = [styles, styles, styles]));
+            menuClass = copy;
+          }}
+        >
+          X
+        </h1>
+        <ul>
+          <li
+            onClick={() => {
+              navi("/");
+            }}
+          >
+            HOME
+          </li>
+          <li>COURSE</li>
+          <li>ABOUT</li>
+        </ul>
+      </div>
       {loginUi == true ? <LoginComp /> : null}
       <SlideMenu containerClass={containerClass} menuAction={menuAction} />
       <div className={`${styles.nav_container} ${styles.container}`}>
