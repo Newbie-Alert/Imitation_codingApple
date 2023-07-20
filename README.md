@@ -416,5 +416,3 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 
 ## https://imitation-project.du.r.appspot.com/
 
-=======
-이것을 해결하기 위해 실시간으로 서버와 통신하도록 `socket.io` , `react-query`를 학습할 예정이다.
