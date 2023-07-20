@@ -10,7 +10,9 @@ function BoardContent() {
 
   useLayoutEffect(() => {
     axios
-      .get(`http://localhost:8080/board/content/${id.id1}/${id.id2}`)
+      .get(
+        `https://imitation-project.du.r.appspot.com/board/content/${id.id1}/${id.id2}`
+      )
       .then((result) => {
         setContent((content = result.data));
         let currentData = content.find((el) => el.title == id.id2);

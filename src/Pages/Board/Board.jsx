@@ -12,7 +12,9 @@ function Board() {
   // GET DATA
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/board/${id.id1}/${id.id2}`)
+      .get(
+        `https://imitation-project.du.r.appspot.com/board/${id.id1}/${id.id2}`
+      )
       .then((result) => {
         setTitle(result.data.title);
         setBoardContent(result.data.board);
@@ -76,7 +78,7 @@ function Write({ title, id }) {
       </div>
       <form
         className={styles.write_input}
-        action={`http://localhost:8080/board/post/${title}`}
+        action={`https://imitation-project.du.r.appspot.com/board/post/${title}`}
         method="POST"
       >
         <div>

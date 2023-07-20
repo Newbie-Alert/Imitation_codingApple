@@ -11,8 +11,10 @@ function Course() {
   // useEffect
   useEffect(() => {
     axios
-      .get("http://localhost:8080/course")
-      .then((result) => setCourse(result.data));
+      .get("https://imitation-project.du.r.appspot.com/course")
+      .then((result) => {
+        setCourse(result.data);
+      });
   }, []);
   return (
     <div className="course_container">
@@ -37,21 +39,22 @@ function Course() {
         </div>
       </div>
       <div className={styles.lists}>
-        {course.map((el, i) => {
-          console.log(el.image);
-          return (
-            <div className={styles.lists_card} key={i}>
-              <div className={styles.lists_card_img}>
-                <img src={`${process.env.PUBLIC_URL + el.image}`} alt="" />
-              </div>
-              <div className={styles.lists_card_info}>
-                <h2>{el.title}</h2>
-                <div className={styles.lists_card_info_review}>아직</div>
-                <p>{el.description}</p>
-              </div>
-            </div>
-          );
-        })}
+        {course !== null
+          ? course.map((el, i) => {
+              return (
+                <div className={styles.lists_card} key={i}>
+                  <div className={styles.lists_card_img}>
+                    <img src={`${process.env.PUBLIC_URL + el.image}`} alt="" />
+                  </div>
+                  <div className={styles.lists_card_info}>
+                    <h2>{el.title}</h2>
+                    <div className={styles.lists_card_info_review}>아직</div>
+                    <p>{el.description}</p>
+                  </div>
+                </div>
+              );
+            })
+          : null}
       </div>
     </div>
   );

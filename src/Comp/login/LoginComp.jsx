@@ -14,7 +14,10 @@ function LoginComp() {
         }}
       ></div>
       <div className={styles.login_container}>
-        <form action="http://localhost:8080/login" method="POST">
+        <form
+          action="https://imitation-project.du.r.appspot.com/login"
+          method="POST"
+        >
           <div className={styles.login_id}>
             <label>아이디</label>
             <input type="text" name="id" />

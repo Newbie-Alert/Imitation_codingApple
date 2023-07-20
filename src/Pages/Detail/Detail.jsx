@@ -12,7 +12,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HtmlParser from "react-html-parser";
 import styles from "./Detail.module.css";
-import Cart from "../Cart/Cart";
 
 function Detail() {
   // STATE
@@ -39,27 +38,33 @@ function Detail() {
   let id = useParams();
   useEffect(() => {
     // 해당 페이지 강의 리스트
-    axios.get(`http://localhost:8080/detail/${id.id}`).then((result) => {
-      setDetail(result.data);
-      setLesson(result.data.chapter);
-      setLessonTwo(result.data.chapter2);
-      // 해당 강좌 리뷰, 리뷰 관련 정보
-      axios
-        .all([
-          axios.get(`http://localhost:8080/reviews/${id.id}`),
-          axios.get(`http://localhost:8080/count/${id.id}`),
-        ])
-        .then(
-          axios.spread((res1, res2) => {
-            setReviews(res1.data.review);
-            setReviewCount(res2.data.count);
-            setTitle(res2.data.name);
-          })
-        );
-    });
-  }, [Cart]);
+    axios
+      .get(`https://imitation-project.du.r.appspot.com/detail/${id.id}`)
+      .then((result) => {
+        setDetail(result.data);
+        setLesson(result.data.chapter);
+        setLessonTwo(result.data.chapter2);
+        // 해당 강좌 리뷰, 리뷰 관련 정보
+        axios
+          .all([
+            axios.get(
+              `https://imitation-project.du.r.appspot.com/reviews/${id.id}`
+            ),
+            axios.get(
+              `https://imitation-project.du.r.appspot.com/count/${id.id}`
+            ),
+          ])
+          .then(
+            axios.spread((res1, res2) => {
+              setReviews(res1.data.review);
+              setReviewCount(res2.data.count);
+              setTitle(res2.data.name);
+            })
+          );
+      });
+  }, []);
 
-  // UI관련 Fx
+  // UI관련 함수
   /** 강좌 리스트 UI 스위치 인자로 0 || 1을 갖는다 */
   function showAndHide(num) {
     if (showLesson[num] === "hide") {
@@ -123,7 +128,7 @@ function Detail() {
               <button
                 onClick={() => {
                   axios
-                    .post("http://localhost:8080/add", {
+                    .post("https://imitation-project.du.r.appspot.com/add", {
                       id: parseInt(id.id),
                       name: detail.title,
                       price: parseInt(detail.price),

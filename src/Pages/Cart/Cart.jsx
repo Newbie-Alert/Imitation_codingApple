@@ -7,9 +7,11 @@ function Cart() {
   let sum = 0;
 
   useEffect(() => {
-    axios.get("http://localhost:8080/cart").then((result) => {
-      setItem(result.data);
-    });
+    axios
+      .get("https://imitation-project.du.r.appspot.com/cart")
+      .then((result) => {
+        setItem(result.data);
+      });
   }, []);
   if (item !== null) {
     item.map((el) => (sum += el.price));
@@ -66,9 +68,12 @@ function CARTITEM({ item, total }) {
                     data-id={i}
                     onClick={(e) => {
                       axios
-                        .post("http://localhost:8080/delete", {
-                          id: parseInt(e.target.dataset.id),
-                        })
+                        .post(
+                          "https://imitation-project.du.r.appspot.com/delete",
+                          {
+                            id: parseInt(e.target.dataset.id),
+                          }
+                        )
                         .then(
                           e.target.parentNode.parentNode.classList.add(
                             styles.fade

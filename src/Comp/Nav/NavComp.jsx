@@ -28,15 +28,19 @@ function NavComp() {
   useEffect(() => {
     // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
     const loadUserStatus = function () {
-      axios.get("http://localhost:8080/confirm").then((result) => {
-        if (result.data.activate > 0) {
-          setSign((sign = true));
-        }
-      });
+      axios
+        .get("https://imitation-project.du.r.appspot.com/confirm")
+        .then((result) => {
+          if (result.data.activate > 0) {
+            setSign((sign = true));
+          }
+        });
     };
-    axios.get("http://localhost:8080/cart").then((result) => {
-      setCart((cartItem = result.data));
-    });
+    axios
+      .get("https://imitation-project.du.r.appspot.com/cart")
+      .then((result) => {
+        setCart((cartItem = result.data));
+      });
     return loadUserStatus;
   }, []);
 
@@ -161,7 +165,7 @@ function UserPopup() {
           <h5
             onClick={() => {
               axios
-                .post("http://localhost:8080/logout", {
+                .post("https://imitation-project.du.r.appspot.com/logout", {
                   data: 0,
                 })
                 .then(document.location.reload());
