@@ -407,7 +407,7 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 
 ### 추가 할 기능
 
-- 게시판, 장바구니 반응형으로
+- 게시판, 장바구니 반응형으로 [ 완료 ]
 - 로그인 후 my page 기능 추가 예정
 - 관리자 페이지도.... 도전 예정
 
@@ -416,3 +416,12 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 
 ## https://imitation-project.du.r.appspot.com/
 
+## 16일 차
+
+### 서버와 실시간 통신 학습 중 [ SSE, Socket.io ]
+
+## 17일 차
+
+- **서버와 실시간 통신 학습 중 2**
+- 게시판 댓글 기능 추가 중
+- 데이터가 없는 UI 비활성화

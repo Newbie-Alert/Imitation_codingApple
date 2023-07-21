@@ -27,7 +27,6 @@ function NavComp() {
   // useEffect
   useEffect(() => {
     // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
-
     axios
       .get("https://imitation-project.du.r.appspot.com/confirm")
       .then((result) => {
