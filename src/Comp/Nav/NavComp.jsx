@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "./NavComp.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import LoginComp from "../login/LoginComp";
 import axios from "axios";
 
 function NavComp() {
   // STATE
-  let [menuSwitch, setMenuSwitch] = useState(false);
   let [menuClass, setMenu] = useState([styles, styles, styles]);
   let [menuCount, setMenuCount] = useState(false);
   let [containerClass, setContainerClass] = useState(styles);
@@ -28,21 +27,21 @@ function NavComp() {
   // useEffect
   useEffect(() => {
     // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
-    const loadUserStatus = function () {
-      axios
-        .get("https://imitation-project.du.r.appspot.com/confirm")
-        .then((result) => {
-          if (result.data.activate > 0) {
-            setSign((sign = true));
-          }
-        });
-    };
+
     axios
-      .get("https://imitation-project.du.r.appspot.com/cart")
+      .get("https://imitation-project.du.r.appspot.com/confirm")
       .then((result) => {
-        setCart((cartItem = result.data));
+        if (result.data.activate > 0) {
+          setSign((sign = true));
+        }
+
+        axios
+          .get("https://imitation-project.du.r.appspot.com/cart")
+          .then((result) => {
+            setCart((cartItem = result.data));
+          });
+        return;
       });
-    return loadUserStatus;
   }, []);
 
   // FUNCTION
@@ -97,7 +96,7 @@ function NavComp() {
           <li>ABOUT</li>
         </ul>
       </div>
-      {loginUi == true ? <LoginComp /> : null}
+      {loginUi === true ? <LoginComp /> : null}
       <SlideMenu containerClass={containerClass} menuAction={menuAction} />
       <div className={`${styles.nav_container} ${styles.container}`}>
         {userUi == true ? <UserPopup navi={navi} /> : null}
@@ -124,7 +123,7 @@ function NavComp() {
                   navi("/course");
                 }}
                 className={`${styles.nav_category_item} ${
-                  page == 1 ? current : null
+                  page === 1 ? current : null
                 } `}
               >
                 COURSE
@@ -135,7 +134,7 @@ function NavComp() {
                   navi("/page");
                 }}
                 className={`${styles.nav_category_item}
-                ${page == 2 ? current : null} `}
+                ${page === 2 ? current : null} `}
               >
                 ABOUT
               </li>

@@ -93,8 +93,8 @@ function Home() {
             </div>
           </div>
         </section>
+
         {/* MAIN_SECTION_THIRD */}
-        <img src="" alt="" />
         <section className={`${styles.section_third}`}>
           <div className={`${styles.edu_list} ${styles.grid}`}>
             {states.eduList.map((el, i) => {

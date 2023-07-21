@@ -12,13 +12,6 @@ img {
   object-fit: cover;
 }
 
-.move {
-  .move {
-    transform: translateX(-300px);
-  }
-
-}
-
 .container {
   padding: 2.5rem 2.5rem 0 2.5rem;
 }
@@ -275,14 +268,34 @@ img {
 }
 
 .section_third_edu_card {
+  position: relative;
   text-align: center;
   border: 1px solid #eee;
   padding: 1rem;
   transition: all 0.3s ease;
+}
+
+.section_third_edu_card:nth-child(1) {
   cursor: pointer;
 }
 
-.section_third_edu_card:hover {
+.section_third_edu_card::before {
+  content: 'no-data';
+  color: red;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+}
+
+.section_third_edu_card:nth-child(1)::before {
+  display: none;
+}
+
+.section_third_edu_card:nth-child(1):hover {
   transform: scale(0.95);
 }
 

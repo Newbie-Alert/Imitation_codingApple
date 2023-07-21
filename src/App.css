@@ -4,6 +4,9 @@
   margin: 0;
   box-sizing: border-box;
   font-family: 'Nanum Gothic', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  letter-spacing: -0.05rem;
 }
 
 .container {

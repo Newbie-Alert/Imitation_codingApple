@@ -86,12 +86,50 @@
 .lists_card {
   display: flex;
   margin-block: 1rem;
+  gap: 2rem;
   align-items: start;
+  padding: 1rem 6rem;
+
+  border-radius: 12px;
+  position: relative;
+}
+
+.lists_card:nth-child(1) {
+  display: flex;
+  margin-block: 1rem;
+  gap: 2rem;
+  align-items: start;
+  padding: 1rem 6rem;
+  cursor: pointer;
+  border-radius: 12px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.lists_card::before {
+  content: 'no-data';
+  color: red;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+}
+
+.lists_card:nth-child(1):before {
+  display: none;
+}
+
+.lists_card:nth-child(1):hover {
+  transform: scale(0.97);
 }
 
 .lists_card_img {
-  width: 36%;
+  width: 100%;
   border-radius: 5px;
+  padding-top: 0.5rem;
 }
 
 .lists_card_image img {
@@ -101,17 +139,109 @@
 }
 
 .lists_card_info {
-  width: 60%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.lists_card_info h2 {
+  margin-block: 0.5rem;
 }
 
 .lists_card_info p {
   font-size: 1.2rem;
   width: 90%;
+
 }
 
 .lists_card_info div,
 .lists_card_info p {
   margin-block: 0.5rem;
+}
+
+
+.set_block {
+  display: block;
+  margin-block: 0.5rem;
+  width: 90%;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #eee;
+  padding: 1rem;
+}
+
+.set_grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width:1200px) {
+  .card_lists {
+    padding: 4rem;
+  }
+
+  .lists_card {
+    margin-block: 1rem;
+    gap: 2rem;
+    align-items: start;
+    padding: 1rem;
+    border-radius: 12px;
+    width: 100%;
+  }
+
+  .set_grid {
+    display: block;
+  }
+
+  .grid,
+  .block {
+    display: none;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .lists {
+    padding: 1rem;
+  }
+
+  .lists_card {
+    display: block;
+    margin-block: 1rem;
+    gap: 2rem;
+    align-items: start;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lists_card_img {
+    width: 100%;
+  }
+
+  .grid,
+  .block {
+    display: none;
+  }
+
+  .set_block {
+    width: 100%;
+  }
+
+  .set_grid {
+    display: block;
+  }
+
+  .lists_card_info {
+    line-height: 1.6rem;
+  }
+
+  .lists_card_info p {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
 }

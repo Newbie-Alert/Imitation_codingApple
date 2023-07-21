@@ -3,10 +3,13 @@ import styles from "./Course.module.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGrip, faList } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function Course() {
   // STATE
   let [course, setCourse] = useState([]);
+  let [grid, setGrid] = useState(styles);
+  let [block, setblock] = useState(styles);
 
   // useEffect
   useEffect(() => {
@@ -16,46 +19,63 @@ function Course() {
         setCourse(result.data);
       });
   }, []);
-  return (
-    <div className="course_container">
-      <div className={styles.form_container}>
-        <form className={styles.search_form} action="/search" method="POST">
-          <input placeholder="강좌 검색" type="text" name="title" />
-        </form>
-      </div>
 
+  // HOOK
+  let navi = useNavigate();
+
+  return (
+    <div>
       <div className={styles.course_list}>
         <div className={styles.sort_option}>
-          <select className={styles.select} id="course-order">
+          {/* <select className={styles.select} id="course-order">
             <option value>정렬 순서</option>
             <option value="alphabet">가나다순</option>
             <option value="popular">인기순</option>
             <option value="alphabet">수강생순</option>
-          </select>
+          </select> */}
           <div className={styles.list_display}>
-            <FontAwesomeIcon className={styles.block} icon={faList} />
-            <FontAwesomeIcon className={styles.grid} icon={faGrip} />
+            <FontAwesomeIcon
+              className={styles.block}
+              icon={faList}
+              onClick={() => {
+                setGrid((grid = styles));
+                setblock(styles);
+              }}
+            />
+            <FontAwesomeIcon
+              className={styles.grid}
+              icon={faGrip}
+              onClick={() => {
+                setGrid((grid = styles.set_grid));
+                setblock(styles.set_block);
+              }}
+            />
           </div>
         </div>
       </div>
-      <div className={styles.lists}>
+      <section className={`${styles.lists} ${grid}`}>
         {course !== null
           ? course.map((el, i) => {
               return (
-                <div className={styles.lists_card} key={i}>
+                <div
+                  onClick={() => {
+                    navi(`/detail/${el.id}`);
+                  }}
+                  className={`${styles.lists_card} ${block}`}
+                  key={i}
+                >
                   <div className={styles.lists_card_img}>
                     <img src={`${process.env.PUBLIC_URL + el.image}`} alt="" />
                   </div>
                   <div className={styles.lists_card_info}>
                     <h2>{el.title}</h2>
-                    <div className={styles.lists_card_info_review}>아직</div>
                     <p>{el.description}</p>
                   </div>
                 </div>
               );
             })
           : null}
-      </div>
+      </section>
     </div>
   );
 }
