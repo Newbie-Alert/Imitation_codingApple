@@ -2,13 +2,16 @@ import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./BoardContent.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTurnDown } from "@fortawesome/free-solid-svg-icons";
 
 function BoardContent() {
   let id = useParams();
   let [content, setContent] = useState([]);
   let [current, setCurrent] = useState([]);
+  let [comment, setComment] = useState([]);
+  let [re_comment, setRecomment] = useState([]);
   let [commentUI, setCommentUi] = useState(false);
-
   useLayoutEffect(() => {
     axios
       .get(
@@ -19,6 +22,11 @@ function BoardContent() {
         let currentData = content.find((el) => el.title == id.id2);
         setCurrent(currentData);
       });
+
+    axios.get("http://localhost:8080/comment").then((result) => {
+      setComment((comment = result.data));
+      console.log(comment);
+    });
   }, []);
   // useEffect(() => {
   //   axios
@@ -48,28 +56,82 @@ function BoardContent() {
           댓글
         </button>
       </div>
-      {commentUI == true ? <REPLY /> : null}
+      {commentUI == true && comment !== null ? (
+        <REPLY comment={comment} title={id.id2} />
+      ) : null}
       <REPLYFORM title={id.id2} />
     </div>
   );
 }
 
 // reply form
-function REPLY() {
+function REPLY({ comment, title, re_comment }) {
   return (
-    <div className={styles.comment_container}>
-      <h3>user name</h3>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
-        perspiciatis nulla minus odit quidem, ipsa eos et accusamus doloribus
-        voluptas dolorem necessitatibus sed eius soluta ipsum. Sunt impedit iure
-        corrupti?
-      </p>
-    </div>
+    <>
+      {comment.map((el, i) => {
+        return (
+          <div key={i} className={styles.comment_container}>
+            <div className={styles.re_comment}>
+              <h3>user name</h3>
+              <p id="target">{el.comment}</p>
+            </div>
+
+            <div className={styles.re_reply_box}>
+              {comment[i].re_comment !== null
+                ? comment[i].re_comment.map((el, i) => {
+                    return (
+                      <div key={i} className={styles.re_reply}>
+                        <FontAwesomeIcon
+                          icon={faTurnDown}
+                          className={styles.re_comment_arrow}
+                        />
+                        <div>
+                          <h3>userName</h3>
+                          <p>{el.comment}</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+              <div className={styles.re_comment_input}>
+                <input
+                  type="text"
+                  placeholder="댓글을 입력하세요..."
+                  name="re_comment"
+                  id="re_comment_content"
+                />
+                <button
+                  onClick={() => {
+                    let date = new Date();
+                    date = date.getTime();
+                    let re_comment = document.querySelector(
+                      "#re_comment_content"
+                    );
+                    let target = document.querySelector("#target");
+                    axios
+                      .post(`http://localhost:8080/rereply`, {
+                        title: title,
+                        target: target.value,
+                        comment: re_comment.value,
+                        time: date,
+                        re_comment: [],
+                      })
+                      .then(window.location.reload());
+                  }}
+                  className={styles.add_comment}
+                >
+                  추가
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 }
 
-function REPLYFORM({ title }) {
+function REPLYFORM({ title, id }) {
   return (
     <div className={styles.reply_form} action="/reply" method="POST">
       <input
@@ -84,10 +146,11 @@ function REPLYFORM({ title }) {
           date = date.getTime();
           let comment = document.querySelector("#comment_content");
           axios
-            .post("http://localhost:8080/reply", {
+            .post(`http://localhost:8080/reply`, {
               title: title,
               comment: comment.value,
               time: date,
+              re_comment: [],
             })
             .then(window.location.reload());
         }}

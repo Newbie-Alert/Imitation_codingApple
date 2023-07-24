@@ -1,40 +1,25 @@
-## 1일 차
+# 1 ~ 4일 차
 
-### Nav Comp 제작
+- Nav Comp 제작
+- MainPage_section 제작
+- MainPage_2번 section 제작, MainPage 반응형 적용
+- MainPage 완료
 
-## 2일 차
-
-### MainPage_section 제작
-
-## 3일 차
-
-### MainPage_2번 section 제작, MainPage 반응형 적용
-
-## 4일 차
-
-### MainPage 완료
-
-# Server Tutorial 후
+# 5일 차
 
 [백엔드 학습](https://github.com/Newbie-Alert/serverTutorial)
 
-## 서버와 연동하여 로그인 기능 추가
+### 서버와 연동하여 로그인 기능 추가
 
 - **passport** 라이브러리를 통하여 local 방식 인증을 사용
 - useEffect를 통해 Nav 컴포지션이 마운트 될 시, DB의 유저 데이터 속 activate 값에 따라 UI 변경
 
 ## 6일 차
 
-### Course Page 만드는 중
-
+- Course Page 만드는 중
 - DB에서 강의 목록 정보를 가져와 UI 생성
 - mongo DB의 search index를 통해 UI목록을 최신순, 가나다순, 인기순으로 정렬하는 기능을 추가할 예정
   <br/>
-
-### 필요한 부분
-
-- mongo DB에 데이터를 등록해놓을 때 하나하나 손으로 넣기에는 시간이 오래 걸려서
-  mongo DB 명령어에 대해 학습해야겠다.
 
 ## 7일 차
 
@@ -42,17 +27,16 @@
 
 ## 8일 차
 
-- 서버에서 url parameter를 사용하여 각각의 detail페이지에 필요한 정보를 제공할 수 있도록 API를 제작하였다.  
-   이제 detail페이지를 열 때 해당 detail page에 필요한 데이터를 가져올 수 있다.  
-   예) detail/0 페이지를 열면 detail/0 에 해당하는 정보를 가져옴.
+- 서버에서 url parameter를 사용하여 각각의 detail페이지에 필요한 정보를 제공할 수 있도록 API를 제작.  
+   이제 detail페이지를 열 때 해당 detail page에 필요한 데이터를 가져올 수 있다.
 
-  ### 원리
+  ### 예시
 
   요청에 담겨오는 `url parameter`와 `같은 id 값을 가진 데이터`를 DB에서 찾아서 프론트로 전달해주는 것.  
    주의할 부분은 `url parameter`는 `String 타입`이라서 `형변환이 필요`하다는 것
 
   ```javascript
-  server.js;
+  < server.js >
 
   app.get("/detail/:id", function (req, res) {
     db.collection("data").findOne(
@@ -64,41 +48,39 @@
   });
   ```
 
-### 제작은 실패했다
+### 근데 문제가 있다
 
-#### 실패 사유
-
-- 서버에서 데이터를 가져와 state에 적용하기까지는 성공했으나,  
-  STATE가 자꾸 새로고침 할 때마다 초기화 되어 데이터가 없다고 한다.
+- 서버에서 데이터를 가져와 `state`에 적용하기까지는 성공했으나,  
+  `state`가 자꾸 새로고침 할 때마다 초기화 되어 데이터가 없다고 한다.
 
 ## 9일 차
 
-### Detail Page 제작 성공
+- Detail Page 제작 성공
 
-### 해결방안
+- 아직도 왜 새로고침 할 때마다 useEffect가 작동하지 않았었는지 아직 이유는 잘 모르겠다.....🤔🤔🤔🤔🤔🤔
 
-- 8일 차에는 프론트에서 get요청을 할 때 이전에 만들어 놓은 API에 요청을 했었는데 (요청 주소만 다르고 요청 처리 방식은 똑같은 것)  
-  `url parameter`를 사용한 API로 데이터를 받아올 수 있게 수정하였더니 해결됐다.  
-  서버에서 처리 하는 방식은 같은데  
-  왜 url parameter를 사용하는 페이지에서는 새로고침 할 때마다 useEffect가 작동하지 않았었는지 아직 이유는 잘 모르겠다.....🤔🤔🤔🤔🤔🤔
+### (12일 차에 찾은 해결방안)
+
+- useEffect는 layout이 먼저 렌더 된 다음 실행되기 때문에
+  페이지가 새로고침 될 때마다 state가 초기 값으로 갔던 것.
+- 서버에서 가져온 데이터를 사용하는 layout은 **useEffect가 실행되어 state에 값이 있을 때 나타나도록** `삼항연산자` 사용
 
 ## 10일 차
 
-### 산 넘어 산 \_ DB의 데이터들
+### DB의 데이터를 어떻게 차곡차곡 유용하게 정리하나..
 
-8일 차에서 조금 막혔다가 해결하고 넘어오니  
-이번엔 DB에 할 일이 많아 속도가 더뎌졌다.  
-Detail Page에 정보가 상당히 많이 들어간다.  
+Detail Page에 정보가 많이 들어간다.  
 처음에는 간단히 생각하고 주먹구구 식으로 DB를 만들었는데  
-강좌의 커리큘럼 테이블에 들어갈 정보들,  
-리뷰단에 들어갈 리뷰 데이터들까지..  
-리뷰는 리뷰를 강좌 카테고리별로 나눠야하고,
-할 일이 많아서 머리가 복잡하다.  
-프론트도 bootstrap을 사용하지 않고 만들고 있지만 언젠가 bootstrap을 써야할 수도 있을 거 같다.
+강좌 커리큘럼 테이블에 들어갈 데이터,  
+리뷰단에 들어갈 리뷰 데이터,
+리뷰는 리뷰를 강좌 카테고리별로 나눠야 하고,  
+데이터를 어떻게 만들어놔야 할지 복잡하다🥲
 
-### 문제와 해결
+<br/>
 
-### Html parsing
+### 오늘의 문제와 해결
+
+#### **Html parsing**
 
 DB에서 커다란 `String`형태의 `html`자료를 리액트에 바인딩 해보니  
 아래와 같이 String 형태로 나오는 문제가 있었다.
@@ -111,7 +93,7 @@ DB에서 커다란 `String`형태의 `html`자료를 리액트에 바인딩 해�
 <p>Next.js 사용시 서버사이드 렌더링이 쉽기 때문에&nbsp;</p>
 ```
 
-구글링을 해보니 `String형태의 html`을 `html로 렌더`해서 출력해주는 라이브러에 대해 알게 됐다.
+구글링을 해보니 `String형태의 html`을 `html로 렌더`하여 출력해주는 라이브러에 대해 알게 됐다.
 `react-html-parser` 라는 라이브러리였는데
 사용법과 효과는 아래와 같았다.
 
@@ -131,14 +113,17 @@ function Detail(){
 
 // component
 function TAB({ data }) {
-  // string 형태의 html을 변수에 담고
-  const htmlString = data.about;
-  // htmlParser() 안에 앞서 만든 변수를 인자로 보낸다
+
+  const htmlString = data.about; // string 형태의 html을 변수에 담고
+
   return <div className={styles.tab}>{HtmlParser(htmlString)}</div>;
+  // htmlParser() 안에 앞서 만든 변수를 인자로 보낸다
 }
 ```
 
 ### react-html-parser 적용 후 결과
+
+- 깔끔하게 html이 렌더되었다.
 
 ```txt
 Next.js는 프론트엔드부터 서버까지 만들 수 있는 React기반 프레임워크입니다.
@@ -164,11 +149,11 @@ Next.js 사용시 서버사이드 렌더링이 쉽기 때문에
   ]
 ```
 
-### 이제 리뷰 섹션이 남았다...!
+### 이제 리뷰 섹션이 남았다.
 
 ### 계획
 
-- DB에 리뷰처럼 보일 데이터를 구축
+- DB에 리뷰처럼 보일 데이터를 만들기
 - 실제 리뷰를 작성할 때 리뷰의 개수와 평점, 고유 ID를 부여할 collection 생성
 - 리뷰 데이터를 가져와 detail page UI에 렌더
 
@@ -190,6 +175,8 @@ Next.js 사용시 서버사이드 렌더링이 쉽기 때문에
 
 <Detail.jsx 의 useEffect의 get요청>
 // axios all을 사용하여 여러 개의 데이터를 가져오도록 하였다.
+
+let id = useParams();
 
 axios.all([
   axios.get(`http://localhost:8080/reviews/${id.id}`),
@@ -225,9 +212,7 @@ app.get("/count/:id", function (req, res) {
 });
 ```
 
-### 남은 것
-
-- 이제 게시판, 강의 재생 페이지, 카트/구매 기능이 남았다...!
+- 이제 게시판, 강의 재생 페이지, 카트/구매 기능이 남았다.
 
 ## 12일 차
 
@@ -236,7 +221,7 @@ app.get("/count/:id", function (req, res) {
 - CSS 의 `mix-blend-mode`를 통해 배경의 `width`에 따라 별의 색상이 변경되게 한 후  
    배경의 `width 값`에 평균 값을 주게 되면 이렇게 된다!!
 
-  ## 1시간 정도 헤맨 거 같다 😗
+  ## 오래 헤맨 거 같다 😗
 
   ```CSS
   <CSS>
@@ -292,7 +277,7 @@ app.get("/count/:id", function (req, res) {
 
 ## 해결
 
-- 별점 `div` 자체의 width를 `fit-content`로 하여  
+- 별점의 색을 채우는 배경 `div` width를 `fit-content`로 하여  
   div 안의 요소인 `별 5개 만큼의 너비`를 주어 너비를 같게 하였다.
 
 ## 13일 차
@@ -306,7 +291,7 @@ app.get("/count/:id", function (req, res) {
 
 - API를 만드는데 머리가 조금 복잡했다.
 
-## 해결방안
+## 해결
 
 - API에 `url parameter`를 두 개 전달하여  
   /게시판/`'강좌 이름(param 1)'` / `게시글 고유의 id(param 2)` 이런 식으로 작동하게 하여 게시판 각각의 게시글 상세페이지를 완성했다.
@@ -316,8 +301,7 @@ app.get("/count/:id", function (req, res) {
 // BOARD PAGE
 //============
 
-// 게시판이 마운트 될 때 실행되는 코드
-// 게시판 리스트 UI에 바인딩 되는 data를 가져옴
+// 게시판이 마운트 될 때 게시판 리스트 UI에 바인딩 되는 data를 가져옴
 // /board/Nextjs/0 이런 식
 app.get("/board/:id1/:id2", function (req, res) {
   // 강좌 마다 고유의 코드가 있는데 페이지와 일치하는 정보를 가져오기 위해 사용했다.
@@ -390,7 +374,7 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 - `useEffect()`로 데이터를 받아온 후 새로고침 시 오류가 떴는데  
   코드가 실행되는 순서가 레이아웃이 먼저 렌더 된 후 useEffect가 실행되서 그렇다고 한다.  
   그래서 받아온 데이터가 비어있지 않을 때 렌더를 하도록 삼항연산자를 추가하였다.
-- 장바구니가 비어있지 않다면 Nav의 장바구니 아이콘 옆에 장바구니 속 제품이 몇 개인지 표기하도록 했는데, Nav를 새로고침 하지 않으면 뜨지 않는다.
+- 장바구니가 비어있지 않다면 Nav의 장바구니 아이콘 옆에 장바구니 속 제품이 몇 개인지 표기하도록 했는데, 페이지를 새로고침 하지 않으면 뜨지 않는다.
 
   이것을 해결하기 위해 실시간으로 서버와 통신하도록 `socket.io` 와 `react-query`를 학습 할 예정이다.
 
@@ -426,11 +410,23 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 - 게시판 댓글 기능 추가 중
 - 데이터가 없는 UI 비활성화
 
-
 ## 18일 차
+
 - 댓글 기능 추가
 
 ### MERN 프로젝트 학습
+
 - 실무자들의 코드 짜임새나 HOOK, Library 사용이 궁금해서 찾아보던 중
   7시간짜리 MERN Stack 프로젝트 영상을 시청함.
 - 게시판, 댓글 등 여러 데이터를 어떻게 구성하고, 저장하고, 관리하는지 학습
+
+## 19일 차
+
+- 대댓글 기능 추가
+
+### 문제
+
+- 게시물의 첫 댓글에는 대댓글이 잘 달리는데  
+  두 번째 댓글부터는 대댓글이 안 달린다.
+- 현재 대댓글을 달고 있는 게시물을 DB에서 찾아야 하는데  
+  무엇으로 내가 댓글을 달고 있는 게시물을 찾아야 할지 아직 모르겠다.

@@ -69,3 +69,20 @@
 .reply_form button {
   width: 5%;
 }
+
+.re_reply_box {
+  margin-block: 0.5rem;
+  padding-left: 1rem;
+}
+
+.re_reply {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block: 0.5rem;
+}
+
+.re_comment_arrow {
+  transform: rotateX(180deg) rotateZ(-90deg);
+
+}
