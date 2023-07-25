@@ -52,6 +52,7 @@ function Board() {
             {boardContent.map((el, i) => {
               return (
                 <li
+                  data-id={el._id}
                   onClick={() => {
                     navi(`/board/content/${title}/${el.title}`);
                   }}

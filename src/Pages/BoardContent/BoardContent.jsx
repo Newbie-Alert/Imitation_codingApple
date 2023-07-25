@@ -23,7 +23,7 @@ function BoardContent() {
         setCurrent(currentData);
       });
 
-    axios.get("http://localhost:8080/comment").then((result) => {
+    axios.get(`http://localhost:8080/comment/${id.id2}`).then((result) => {
       setComment((comment = result.data));
       console.log(comment);
     });
@@ -73,7 +73,9 @@ function REPLY({ comment, title, re_comment }) {
           <div key={i} className={styles.comment_container}>
             <div className={styles.re_comment}>
               <h3>user name</h3>
-              <p id="target">{el.comment}</p>
+              <p id="target" data-id={el._id}>
+                {el.comment}
+              </p>
             </div>
 
             <div className={styles.re_reply_box}>
@@ -98,20 +100,20 @@ function REPLY({ comment, title, re_comment }) {
                   type="text"
                   placeholder="댓글을 입력하세요..."
                   name="re_comment"
-                  id="re_comment_content"
+                  id={`re_comment_content${i}`}
                 />
                 <button
-                  onClick={() => {
+                  data-id={el._id}
+                  onClick={(e) => {
                     let date = new Date();
                     date = date.getTime();
                     let re_comment = document.querySelector(
-                      "#re_comment_content"
+                      `#re_comment_content${i}`
                     );
-                    let target = document.querySelector("#target");
                     axios
                       .post(`http://localhost:8080/rereply`, {
                         title: title,
-                        target: target.value,
+                        target: e.target.dataset.id,
                         comment: re_comment.value,
                         time: date,
                         re_comment: [],
@@ -143,7 +145,6 @@ function REPLYFORM({ title, id }) {
       <button
         onClick={() => {
           let date = new Date();
-          date = date.getTime();
           let comment = document.querySelector("#comment_content");
           axios
             .post(`http://localhost:8080/reply`, {
