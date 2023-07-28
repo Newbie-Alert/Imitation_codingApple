@@ -14,7 +14,7 @@ function Course() {
   // useEffect
   useEffect(() => {
     axios
-      .get("https://imitation-project.du.r.appspot.com/course")
+      .get("https://imitation-project.du.r.appspot.com/data/course")
       .then((result) => {
         setCourse(result.data);
       });

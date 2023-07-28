@@ -16,19 +16,18 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
 
-
-
 function App() {
   return (
     <div className="App">
-      <NavComp />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/course' element={<Course />} />
-        <Route path='detail/:id' element={<Detail />} />
-        <Route path='board/:id1/:id2' element={<Board />} />
-        <Route path='/board/content/:id1/:id2' element={<BoardContent />} />
-        <Route path='/cart' element={<Cart />} />
+        <Route path='/' element={<NavComp />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/course' element={<Course />} />
+          <Route path='detail/:id' element={<Detail />} />
+          <Route path='board/:id1/:id2' element={<Board />} />
+          <Route path='/board/content/:id1/:id2' element={<BoardContent />} />
+          <Route path='/cart' element={<Cart />} />
+        </Route>
       </Routes>
     </div>
   );

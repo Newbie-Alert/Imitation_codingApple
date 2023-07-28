@@ -1,3 +1,71 @@
+# 강의사이트 상상해서 구현해보기
+
+[코딩애플]: https://codingapple.com/
+
+### 실제 수강 중인 [코딩애플] 사이트 상상해서 구현!
+
+코딩인생 첫 MERN 스택 포폴
+
+<p align="center">
+  <img src="https://github.com/Newbie-Alert/Imitation_codingApple/blob/main/mdImg/%EA%B9%83%ED%97%991.png?raw=true" width="45%">
+  <img src="https://github.com/Newbie-Alert/Imitation_codingApple/blob/main/mdImg/%EA%B9%83%ED%97%992.png?raw=true" width="48%">
+</p>
+<p align="center">
+  <img src="https://github.com/Newbie-Alert/Imitation_codingApple/blob/main/mdImg/%EA%B9%83%ED%97%993.png?raw=true" width="46%">
+  <img src="https://github.com/Newbie-Alert/Imitation_codingApple/blob/main/mdImg/%EA%B9%83%ED%97%994.png?raw=true" width="48%">
+</p>
+
+## STACK 🧩
+
+- Mongo DB
+- Express
+- React
+- Node.js
+
+## 구현 📱
+
+- Session 방식 로그인
+- 장바구니
+- 게시판
+- 댓글, 대댓글
+- 강의 상세페이지
+
+## 컴포넌트별 기능
+
+- **Nav**
+
+  - DB에서 사용자의 로그인 정보를 받아와 그에 따라 UI를 변경
+  - DB의 장바구니의 데이터 length가 0이상일 때 장바구니 아이콘에 알림 표시
+
+- **Detail**
+
+  - 마운트 될 때마다 `url Parameter`를 통해 DB에서 해당하는 강좌의 데이터를 가져와 fetch
+  - 해당 강좌의 커리큘럼 테이블, 리뷰, 강의 소개
+  - 강의 소개의 데이터는 `react-html-parser`을 통해 string 형태의 html을 렌더 된 html로 변환
+  - 신청하기 버튼 클릭 시 DB에 데이터를 보내 강좌 정보를 장바구니에 추가
+  - 게시판으로 이동 시 강좌의 이름을 `url Parameter`로 전송
+
+- **Board**
+  - 마운트 시 해당 강좌 DB의 게시물들을 fetch
+  - 게시물을 클릭 시 DB에 해당 게시물의 제목을 post 하고 상세페이지로 이동
+  - UI 조작을 통해 게시글 작성 form 상태 변경
+- **BoardContent**
+  - Board페이지에서 게시물 클릭시 서버에 강좌명, 클릭한 게시물 이름등을 넘겨 해당 게시물의 상세데이터를 가져옴.
+  - 댓글 발행
+  - 대댓글 작성 시
+    DB에서 1차적으로 발행 된 부모 댓글의 `Obect Id`를 찾아 update 하고 대댓글 발행
+
+<br/>
+
+## 현재 문제점 🔨🛠️
+
+- ~~배포 후 새로고침 시 페이지가 Raw json으로 보여지는 것~~ (해결)
+- Nav 컴포넌트의 장바구니 아이콘의 알림이 실시간으로 반영되지 않는 것
+
+  <br/>
+
+# 일별 활동기록 🗓️
+
 # 1 ~ 4일 차
 
 - Nav Comp 제작
@@ -7,25 +75,24 @@
 
 # 5일 차
 
-[백엔드 학습](https://github.com/Newbie-Alert/serverTutorial)
+[백엔드 학습](https://github.com/Newbie-Alert/serverTutorial) 🔥
 
-### 서버와 연동하여 로그인 기능 추가
-
+- 서버와 연동하여 로그인 기능 추가
 - **passport** 라이브러리를 통하여 local 방식 인증을 사용
 - useEffect를 통해 Nav 컴포지션이 마운트 될 시, DB의 유저 데이터 속 activate 값에 따라 UI 변경
 
-## 6일 차
+# 6일 차
 
 - Course Page 만드는 중
 - DB에서 강의 목록 정보를 가져와 UI 생성
 - mongo DB의 search index를 통해 UI목록을 최신순, 가나다순, 인기순으로 정렬하는 기능을 추가할 예정
   <br/>
 
-## 7일 차
+# 7일 차
 
 - course Page UI 수정
 
-## 8일 차
+# 8일 차
 
 - 서버에서 url parameter를 사용하여 각각의 detail페이지에 필요한 정보를 제공할 수 있도록 API를 제작.  
    이제 detail페이지를 열 때 해당 detail page에 필요한 데이터를 가져올 수 있다.
@@ -48,24 +115,23 @@
   });
   ```
 
-### 근데 문제가 있다
+### 문제
 
 - 서버에서 데이터를 가져와 `state`에 적용하기까지는 성공했으나,  
   `state`가 자꾸 새로고침 할 때마다 초기화 되어 데이터가 없다고 한다.
 
-## 9일 차
+# 9일 차
 
 - Detail Page 제작 성공
-
 - 아직도 왜 새로고침 할 때마다 useEffect가 작동하지 않았었는지 아직 이유는 잘 모르겠다.....🤔🤔🤔🤔🤔🤔
 
-### (12일 차에 찾은 해결방안)
+### ↪️ (12일 차에 찾은 해결방안)
 
 - useEffect는 layout이 먼저 렌더 된 다음 실행되기 때문에
   페이지가 새로고침 될 때마다 state가 초기 값으로 갔던 것.
 - 서버에서 가져온 데이터를 사용하는 layout은 **useEffect가 실행되어 state에 값이 있을 때 나타나도록** `삼항연산자` 사용
 
-## 10일 차
+# 10일 차
 
 ### DB의 데이터를 어떻게 차곡차곡 유용하게 정리하나..
 
@@ -74,11 +140,11 @@ Detail Page에 정보가 많이 들어간다.
 강좌 커리큘럼 테이블에 들어갈 데이터,  
 리뷰단에 들어갈 리뷰 데이터,
 리뷰는 리뷰를 강좌 카테고리별로 나눠야 하고,  
-데이터를 어떻게 만들어놔야 할지 복잡하다🥲
+데이터를 어떻게 만들어놔야 할지 복잡하다
 
 <br/>
 
-### 오늘의 문제와 해결
+### 문제와 해결
 
 #### **Html parsing**
 
@@ -135,11 +201,11 @@ Next.js는 프론트엔드부터 서버까지 만들 수 있는 React기반 프�
 Next.js 사용시 서버사이드 렌더링이 쉽기 때문에
 ```
 
-## 11일 차
+# 11일 차
 
-### 강좌 DB 구축
+### 강의 DB 구축
 
-- 강좌 테이블 UI를 반복문으로 축약하여 제작할 때 편리하도록 제작하였다.
+- 강의의 테이블 UI를 반복문으로 축약하여 제작할 때 편리하도록 제작하였다.
 
 ```JSON
 "chapter":[
@@ -149,15 +215,13 @@ Next.js 사용시 서버사이드 렌더링이 쉽기 때문에
   ]
 ```
 
-### 이제 리뷰 섹션이 남았다.
-
-### 계획
+### 미래 계획
 
 - DB에 리뷰처럼 보일 데이터를 만들기
 - 실제 리뷰를 작성할 때 리뷰의 개수와 평점, 고유 ID를 부여할 collection 생성
 - 리뷰 데이터를 가져와 detail page UI에 렌더
 
-## 12일 차
+# 12일 차
 
 ### 추가된 부분
 
@@ -214,14 +278,12 @@ app.get("/count/:id", function (req, res) {
 
 - 이제 게시판, 강의 재생 페이지, 카트/구매 기능이 남았다.
 
-## 12일 차
+# 12일 차
 
 ### 강좌 평균점수에 따라 별점이 표기되도록 하였다
 
 - CSS 의 `mix-blend-mode`를 통해 배경의 `width`에 따라 별의 색상이 변경되게 한 후  
    배경의 `width 값`에 평균 값을 주게 되면 이렇게 된다!!
-
-  ## 오래 헤맨 거 같다 😗
 
   ```CSS
   <CSS>
@@ -265,33 +327,29 @@ app.get("/count/:id", function (req, res) {
   }
   ```
 
-### 따란-
-
 평균이 50일 때의 별점이 표기되는 모습
 
 ![img](./mdImg/star.png)
 
-## 문제였던 것
+### 문제였던 것
 
 - 분명 배경은 너비가 50% 인데 자꾸 별점은 54% 정도로 나오는 것.
 
-## 해결
+### 해결
 
 - 별점의 색을 채우는 배경 `div` width를 `fit-content`로 하여  
   div 안의 요소인 `별 5개 만큼의 너비`를 주어 너비를 같게 하였다.
 
-## 13일 차
-
-### 추가 된 기능
+# 13일 차
 
 - 게시판 글 게시 기능 추가
 - 게시판 글 Page 완성
 
-## 문제였던 것
+### 문제
 
-- API를 만드는데 머리가 조금 복잡했다.
+- DB를 어떻게 체계적으로 잘 정리할지 API를 만드는데 머리가 조금 복잡했다.
 
-## 해결
+### 해결
 
 - API에 `url parameter`를 두 개 전달하여  
   /게시판/`'강좌 이름(param 1)'` / `게시글 고유의 id(param 2)` 이런 식으로 작동하게 하여 게시판 각각의 게시글 상세페이지를 완성했다.
@@ -359,13 +417,13 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 });
 ```
 
-## 배운 것
+### 배운 것
 
 - 조금 더 심도있는 통신 구조를 만들어봐서 조금 경험치가 늘었다ㅎ
 - updateOne()의 `$push` operator에 대해 알게 되서 좋았다.
 - .env 파일을 통해 배포 후 서버와 통신이 안 되는 것을 방지하는 것에 대해 학습했다.
 
-## 14일 차
+# 14일 차
 
 - 장바구니 기능 추가
 
@@ -378,7 +436,7 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 
   이것을 해결하기 위해 실시간으로 서버와 통신하도록 `socket.io` 와 `react-query`를 학습 할 예정이다.
 
-## 15일 차
+# 15일 차
 
 - 배포 완료
 
@@ -400,17 +458,17 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 
 ## https://imitation-project.du.r.appspot.com/
 
-## 16일 차
+# 16일 차
 
 ### 서버와 실시간 통신 학습 중 [ SSE, Socket.io ]
 
-## 17일 차
+# 17일 차
 
 - **서버와 실시간 통신 학습 중 2**
 - 게시판 댓글 기능 추가 중
 - 데이터가 없는 UI 비활성화
 
-## 18일 차
+# 18일 차
 
 - 댓글 기능 추가
 
@@ -420,7 +478,7 @@ app.get("/board/content/:id1/:id2", function (req, res) {
   7시간짜리 MERN Stack 프로젝트 영상을 시청함.
 - 게시판, 댓글 등 여러 데이터를 어떻게 구성하고, 저장하고, 관리하는지 학습
 
-## 19일 차
+# 19일 차
 
 - 대댓글 기능 추가
 
@@ -431,7 +489,7 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 - 현재 대댓글을 달고 있는 게시물을 DB에서 찾아야 하는데  
   무엇으로 내가 댓글을 달고 있는 게시물을 찾아야 할지 아직 모르겠다.
 
-## 20일 차
+# 20일 차
 
 ### 대댓 기능 문제 해결!
 
@@ -440,3 +498,18 @@ app.get("/board/content/:id1/:id2", function (req, res) {
 - 댓글은 작성될 때마다 `dataset` 속성을 통해 자신의 ObjectId를 포함하게 된다.
 - 댓글1에 댓글2 라는 대댓글을 달 때는 DB로 보내는 데이터에 댓글1의 `dataset`안에 있는 `ObjectId`를 같이 보내 댓글1을 찾아 댓글2를 추가한다.
 - 이렇게 댓글2는 댓글1에 종속된 데이터로 관계를 맺어놓을 수 있었다.
+
+# 21일 차
+
+- 새로고침 시 서버에서 보내준 json 데이터만 뜨는 문제 해결
+  - 지금까지 생각지도 못한 부분이었는데 알게되었다.  
+    웹 주소창에 url을 적는 것이 서버에 GET 요청을 하는 것과 같은 기능이라는 것..  
+    react의 라우터 주소(예. /board)와 서버의 get요청 API (예 app.get('/board'))이 같다면
+    새로고침 시 주소창에 `홈페이지 주소~~/detail`로 get 요청을 하는 것과 똑같기 때문에
+    새로고침 하면 서버가 json형태의 파일을 띄워주던 것...
+
+### 결론
+
+- 웹의 작동방식에 대해 하나 알게 되었다
+  주소창에 쓰는 것이 get요청과 마찬가지라는 것.
+  강의에서 설명을 들었던 거 같은 느낌인데 다시 살펴봐야겠다.

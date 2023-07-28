@@ -13,7 +13,7 @@ function Board() {
   useEffect(() => {
     axios
       .get(
-        `https://imitation-project.du.r.appspot.com/board/${id.id1}/${id.id2}`
+        `https://imitation-project.du.r.appspot.com/data/board/${id.id1}/${id.id2}`
       )
       .then((result) => {
         setTitle(result.data.title);
@@ -22,51 +22,57 @@ function Board() {
   }, []);
 
   return (
-    <div className={styles.board_container}>
-      <div className={styles.board_top}>
-        <h2>{title} 게시판</h2>
-        <button>강의로 돌아가기</button>
-      </div>
-
-      <section className={styles.board_main}>
-        <div className={styles.board_search_write}>
-          <form action="/search" method="POST">
-            <input type="text" placeholder="현재 게시판 검색" />
-            <button>검색</button>
-          </form>
-          <div className={styles.write}>
-            <button
-              onClick={() => {
-                writeUI == false ? setWriteUI(true) : setWriteUI(false);
-              }}
-            >
-              글 쓰기
-            </button>
+    <>
+      {boardContent !== [] && title !== "" ? (
+        <div className={styles.board_container}>
+          <div className={styles.board_top}>
+            <h2>{title} 게시판</h2>
+            <button>강의로 돌아가기</button>
           </div>
-        </div>
-        <div className={styles.board_content}>
-          <ul>
-            <li className={styles.board_content_head}>
-              <h3>게시글</h3>
-            </li>
-            {boardContent.map((el, i) => {
-              return (
-                <li
-                  data-id={el._id}
+
+          <section className={styles.board_main}>
+            <div className={styles.board_search_write}>
+              <form action="/search" method="POST">
+                <input type="text" placeholder="현재 게시판 검색" />
+                <button>검색</button>
+              </form>
+              <div className={styles.write}>
+                <button
                   onClick={() => {
-                    navi(`/board/content/${title}/${el.title}`);
+                    writeUI == false ? setWriteUI(true) : setWriteUI(false);
                   }}
-                  key={i}
                 >
-                  {el.title}
+                  글 쓰기
+                </button>
+              </div>
+            </div>
+            <div className={styles.board_content}>
+              <ul>
+                <li className={styles.board_content_head}>
+                  <h3>게시글</h3>
                 </li>
-              );
-            })}
-          </ul>
+                {boardContent.map((el, i) => {
+                  return (
+                    <li
+                      data-id={el._id}
+                      onClick={() => {
+                        navi(`/board/content/${title}/${el.title}`);
+                      }}
+                      key={i}
+                    >
+                      {el.title}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            {writeUI == true ? <Write title={title} id={id} /> : null}
+          </section>
         </div>
-        {writeUI == true ? <Write title={title} id={id} /> : null}
-      </section>
-    </div>
+      ) : (
+        <div>로딩 중</div>
+      )}
+    </>
   );
 }
 

@@ -36,10 +36,11 @@ function Detail() {
   // HOOK
   let navi = useNavigate();
   let id = useParams();
+  console.log(id);
   useEffect(() => {
     // 해당 페이지 강의 리스트
     axios
-      .get(`https://imitation-project.du.r.appspot.com/detail/${id.id}`)
+      .get(`https://imitation-project.du.r.appspot.com/data/detail/${id.id}`)
       .then((result) => {
         setDetail(result.data);
         setLesson(result.data.chapter);

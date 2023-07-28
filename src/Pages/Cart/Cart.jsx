@@ -8,7 +8,7 @@ function Cart() {
 
   useEffect(() => {
     axios
-      .get("https://imitation-project.du.r.appspot.com/cart")
+      .get("https://imitation-project.du.r.appspot.com/length/cart")
       .then((result) => {
         setItem(result.data);
       });

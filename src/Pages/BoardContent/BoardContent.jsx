@@ -15,7 +15,7 @@ function BoardContent() {
   useLayoutEffect(() => {
     axios
       .get(
-        `https://imitation-project.du.r.appspot.com/board/content/${id.id1}/${id.id2}`
+        `https://imitation-project.du.r.appspot.com/data/board/content/${id.id1}/${id.id2}`
       )
       .then((result) => {
         setContent((content = result.data));
@@ -23,20 +23,14 @@ function BoardContent() {
         setCurrent(currentData);
       });
 
-    axios.get(`http://localhost:8080/comment/${id.id2}`).then((result) => {
-      setComment((comment = result.data));
-      console.log(comment);
-    });
+    axios
+      .get(`https://imitation-project.du.r.appspot.com/comment/${id.id2}`)
+      .then((result) => {
+        setComment((comment = result.data));
+        console.log(comment);
+      });
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:8080/board/content/${id.id1}/${id.id2}`)
-  //     .then((result) => {
-  //       setContent(result.data);
-  //     });
-  //   let currentData = content.find((el) => el.title == id.id2);
-  //   setCurrent(currentData);
-  // }, []);
+
   return (
     <div className={styles.content_container}>
       <div className={styles.content_title}>
@@ -111,13 +105,16 @@ function REPLY({ comment, title, re_comment }) {
                       `#re_comment_content${i}`
                     );
                     axios
-                      .post(`http://localhost:8080/rereply`, {
-                        title: title,
-                        target: e.target.dataset.id,
-                        comment: re_comment.value,
-                        time: date,
-                        re_comment: [],
-                      })
+                      .post(
+                        `https://imitation-project.du.r.appspot.com/rereply`,
+                        {
+                          title: title,
+                          target: e.target.dataset.id,
+                          comment: re_comment.value,
+                          time: date,
+                          re_comment: [],
+                        }
+                      )
                       .then(window.location.reload());
                   }}
                   className={styles.add_comment}
@@ -147,7 +144,7 @@ function REPLYFORM({ title, id }) {
           let date = new Date();
           let comment = document.querySelector("#comment_content");
           axios
-            .post(`http://localhost:8080/reply`, {
+            .post(`https://imitation-project.du.r.appspot.com/reply`, {
               title: title,
               comment: comment.value,
               time: date,

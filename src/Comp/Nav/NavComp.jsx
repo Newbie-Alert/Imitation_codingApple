@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./NavComp.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import LoginComp from "../login/LoginComp";
 import axios from "axios";
@@ -28,14 +28,14 @@ function NavComp() {
   useEffect(() => {
     // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
     axios
-      .get("https://imitation-project.du.r.appspot.com/confirm")
+      .get("https://imitation-project.du.r.appspot.com/islogin/confirm")
       .then((result) => {
         if (result.data.activate > 0) {
           setSign((sign = true));
         }
 
         axios
-          .get("https://imitation-project.du.r.appspot.com/cart")
+          .get("https://imitation-project.du.r.appspot.com/length/cart")
           .then((result) => {
             setCart((cartItem = result.data));
           });
@@ -171,6 +171,7 @@ function NavComp() {
           </div>
         </div>
       </div>
+      <Outlet />
     </>
   );
 }
