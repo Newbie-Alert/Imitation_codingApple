@@ -304,4 +304,8 @@ img {
     color: white;
     border-radius: 5px;
   }
+
+  .cart_item {
+    display: none;
+  }
 }

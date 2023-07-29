@@ -7,12 +7,11 @@ import { Outlet, useNavigate } from "react-router-dom";
 import LoginComp from "../login/LoginComp";
 import axios from "axios";
 
-function NavComp() {
+function NavComp({ sign, setSign, cartItem, setCart }) {
   // STATE
   let [menuClass, setMenu] = useState([styles, styles, styles]);
   let [menuCount, setMenuCount] = useState(false);
   let [containerClass, setContainerClass] = useState(styles);
-  let [sign, setSign] = useState(false);
   let [loginUi, setLoginUi] = useState(false);
   let [current, setCurrent] = useState(styles.active);
   let [slide, setSlide] = useState(styles);
@@ -23,25 +22,25 @@ function NavComp() {
   // HOOK
   let navi = useNavigate();
   let [page, setPage] = useState();
-  let [cartItem, setCart] = useState(null);
-  // useEffect
-  useEffect(() => {
-    // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
-    axios
-      .get("https://imitation-project.du.r.appspot.com/islogin/confirm")
-      .then((result) => {
-        if (result.data.activate > 0) {
-          setSign((sign = true));
-        }
 
-        axios
-          .get("https://imitation-project.du.r.appspot.com/length/cart")
-          .then((result) => {
-            setCart((cartItem = result.data));
-          });
-        return;
-      });
-  }, []);
+  // useEffect
+  // useEffect(() => {
+  //   // mount 시 login 상태 받아옴, 상태에 따라 UI에 로그인이 표기되거나 user 아이콘이 표기
+  //   axios
+  //     .get("https://imitation-project.du.r.appspot.com/islogin/confirm")
+  //     .then((result) => {
+  //       if (result.data.activate > 0) {
+  //         setSign((sign = true));
+  //       }
+
+  //       axios
+  //         .get("https://imitation-project.du.r.appspot.com/length/cart")
+  //         .then((result) => {
+  //           setCart((cartItem = result.data));
+  //         });
+  //       return;
+  //     });
+  // }, []);
 
   // FUNCTION
   /** 메뉴를 클릭하면 X자 형태로 변환되는 함수 **/
@@ -176,7 +175,7 @@ function NavComp() {
   );
 }
 
-// UI Composition for Nav
+// UI Comp for Nav
 function UserPopup() {
   return (
     <div className={styles.user_container}>

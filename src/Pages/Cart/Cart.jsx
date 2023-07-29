@@ -14,7 +14,7 @@ function Cart() {
       });
   }, []);
   if (item !== null) {
-    item.map((el) => (sum += el.price));
+    item.map((el) => (sum += el.price * el.quantity));
   }
 
   return (
@@ -74,11 +74,13 @@ function CARTITEM({ item, total }) {
                             id: parseInt(e.target.dataset.id),
                           }
                         )
-                        .then(
-                          e.target.parentNode.parentNode.classList.add(
-                            styles.fade
-                          )
-                        );
+                        .then((result) => {
+                          if (result.data.quantity < 1) {
+                            e.target.parentNode.parentNode.classList.add(
+                              styles.fade
+                            );
+                          }
+                        });
                     }}
                   >
                     X
