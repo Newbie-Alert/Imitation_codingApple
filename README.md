@@ -36,9 +36,10 @@
 
   - DB에서 사용자의 로그인 정보를 받아와 그에 따라 UI를 변경
   - DB의 장바구니의 데이터 length가 1 이상일 때부터 장바구니 아이콘에 알림 표시
- 
+
+
     - 로그인 시연
-    <img src="mdImg/로그인,세션.gif" alt="GIF">
+      <img src="mdImg/로그인,세션.gif" alt="GIF">
 
 - **Detail**
 
