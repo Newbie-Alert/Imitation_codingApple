@@ -153,7 +153,7 @@ MongoClient.connect(process.env.DB_URL, function (err, client) {
         })
       }
     })
-
+    res.redirect('/cart');
   })
 
 
@@ -171,7 +171,7 @@ MongoClient.connect(process.env.DB_URL, function (err, client) {
     db.collection('boardCount').findOne({ title: req.params.id }, function (err, result1) {
       db.collection('board').updateOne({ title: req.params.id }, { $push: { board: { id: result1.count + 1, title: req.body.write_form_title, content: req.body.write_form_content } } }, function (err, result3) {
         console.log(result3)
-        res.redirect('https://imitation-project.du.r.appspot.com/board/nextjs/0')
+        res.redirect('/board/nextjs/0')
       })
     })
     db.collection('boardCount').updateOne({ title: req.params.id }, { $inc: { count: 1 } }, function (err, result) {
@@ -219,11 +219,13 @@ MongoClient.connect(process.env.DB_URL, function (err, client) {
     db.collection('cart').findOne({ id: req.body.id }, function (err, result) {
       if (result.quantity > 1) {
         db.collection('cart').updateOne({ id: req.body.id }, { $inc: { quantity: -1 } }, function (err, result) {
-          res.json(result)
+          // res.json(result)
+          res.redirect('/cart')
         })
       } else {
         db.collection('cart').deleteOne({ id: req.body.id }, function (err, result) {
           console.log('삭제~')
+          res.redirect('/cart')
         })
       }
     })
