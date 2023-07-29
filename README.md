@@ -36,6 +36,9 @@
 
   - DB에서 사용자의 로그인 정보를 받아와 그에 따라 UI를 변경
   - DB의 장바구니의 데이터 length가 1 이상일 때부터 장바구니 아이콘에 알림 표시
+ 
+    - 로그인 시연
+    <img src="mdImg/로그인,세션.gif" alt="GIF">
 
 - **Detail**
 
@@ -49,11 +52,18 @@
   - 마운트 시 해당 강좌 DB의 게시물들을 fetch
   - 게시물을 클릭 시 DB에 해당 게시물의 제목을 post 하고 상세페이지로 이동
   - UI 조작을 통해 게시글 작성 form 상태 변경
+
+    - 게시판 기능 시연
+      <img src="mdImg/게시판.gif" alt="GIF">
+    
 - **BoardContent**
   - Board페이지에서 게시물 클릭시 서버에 강좌명, 클릭한 게시물 이름등을 넘겨 해당 게시물의 상세데이터를 가져옴.
   - 댓글 발행
   - 대댓글 작성 시
     DB에서 1차적으로 발행 된 부모 댓글의 `Obect Id`를 찾아 update 하고 대댓글 발행
+
+    - 대댓글 기능 시연
+      <img src="mdImg/댓글,대댓글.gif" alt="GIF">
 
 - **Cart**
   - Detail page에서 신청하기 버튼 클릭 시, 서버로 해당 강좌 이름을 `url-parameter`로 날려 강좌 DB에서 찾고 장바구니에 추가.
