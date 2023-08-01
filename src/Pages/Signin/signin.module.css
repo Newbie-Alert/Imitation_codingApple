@@ -1,0 +1,47 @@
+.sign_in_container {
+  padding: 3rem 4rem;
+  position: relative;
+}
+
+.sign_in_form {
+  width: 100%;
+  padding: 0 8rem;
+  position: relative;
+}
+
+.sign_in_form label {
+  font-weight: 600;
+}
+
+.input_box {
+  margin-block: 1.5rem;
+}
+
+.input_box input {
+  width: 100%;
+  font-size: 1.3rem;
+  height: 50px;
+  padding: 0.5rem;
+  border: 1px solid #979797;
+  border-radius: 5px;
+  margin-block: 0.5rem;
+}
+
+.alert_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+}
+
+.alert_modal p {
+  color: white;
+  font-size: 4rem;
+  position: absolute;
+  font-weight: 600;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
