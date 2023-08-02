@@ -4,14 +4,46 @@ import styles from "./signin.module.css";
 function SignIn() {
   let [info, setInfo] = useState("");
   let [infoSwitch, setInfoSwitch] = useState(false);
+  let [pwStatus, setPwStatus] = useState();
 
   function IdRegex(userId) {
     let regExp = /^[a-zA-Z0-9]*$/gi;
-
     return regExp.test(userId);
   }
+  function EmailRegex(userEmail) {
+    let regExp2 =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,20}$/;
+    return regExp2.test(userEmail);
+  }
+  function PwRegex(userPw) {
+    // 문자열의 시작 ^
+    // 하나 이상의 영소문자,영대문자 사용
+    // !,@,#,$,%,^,*,=,- 중 하나 이상의 특수문자 포함
+    // 하나 이상의 숫자 포함
+    // 8 ~ 20 자리
+    // 문자열의 끝 $
+    let regExpStrong = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+    let regExpMedium = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
+    let regExpWeak = /^(?=.*[a-zA-Z]).{8,20}$/;
 
-  console.log(IdRegex("aggean0323"));
+    if (regExpStrong.test(userPw) == true) {
+      return "strong";
+    } else if (regExpMedium.test(userPw) == true) {
+      return "medium";
+    } else {
+      return "weak";
+    }
+  }
+
+  function pwCheck(status) {
+    if (status === "strong") {
+      setPwStatus(2);
+    } else if (status === "medium") {
+      setPwStatus(1);
+    } else {
+      setPwStatus(0);
+    }
+  }
 
   function AlertTimeOut() {
     setTimeout(() => {
@@ -54,6 +86,7 @@ function SignIn() {
           <label htmlFor="input_userEmail">이메일</label>
           <input
             required
+            placeholder="example@email.com"
             name="user-email"
             type="text"
             id="input_userEmail"
@@ -63,8 +96,13 @@ function SignIn() {
 
         <div className={`${styles.input_pw} ${styles.input_box}`}>
           <label htmlFor="input_userPw">비밀번호</label>
+          {<PwNotice pwStatus={pwStatus} />}
           <input
+            onChange={(e) => {
+              pwCheck(PwRegex(e.target.value));
+            }}
             required
+            maxLength={20}
             name="user-password"
             type="text"
             id="input_userPw"
@@ -187,6 +225,53 @@ function ModalComp({ info }) {
       <p>{info}를 확인해주세요</p>
     </div>
   );
+}
+
+function PwNotice({ pwStatus }) {
+  if (pwStatus === 0) {
+    return (
+      <div
+        style={{
+          width: "fit-content",
+          color: "white",
+          padding: "0.5rem 1rem",
+          borderRadius: "100px",
+          backgroundColor: "#FF6060",
+        }}
+      >
+        <h4>weak</h4>
+      </div>
+    );
+  } else if (pwStatus === 1) {
+    return (
+      <div
+        style={{
+          width: "fit-content",
+          color: "white",
+          padding: "0.5rem 1rem",
+          borderRadius: "100px",
+          backgroundColor: "rgb(45, 189, 64)",
+        }}
+      >
+        <h4>medium</h4>
+      </div>
+    );
+  }
+  if (pwStatus === 2) {
+    return (
+      <div
+        style={{
+          width: "fit-content",
+          color: "white",
+          padding: "0.5rem 1rem",
+          borderRadius: "100px",
+          backgroundColor: "#0072de",
+        }}
+      >
+        <h4>strong</h4>
+      </div>
+    );
+  }
 }
 
 export default SignIn;
