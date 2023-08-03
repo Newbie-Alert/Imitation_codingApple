@@ -96,6 +96,12 @@
       
       <img src="mdImg/비밀번호 검증.gif" alt="GIF">
 
+    - **카카오 주소 API를 사용하여 주소 검색 및 적용**
+ 
+   
+      
+      <img src="mdImg/주소.gif" alt="GIF">
+
 
 
 <br/>
