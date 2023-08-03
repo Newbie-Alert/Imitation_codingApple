@@ -45,3 +45,24 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.address_box {
+  margin-top: 0.5rem;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.address_box input {
+  padding: 0.5rem;
+}
+
+.find_address {
+  display: flex;
+  gap: 1rem;
+}
+
+.find_address button {
+  padding: 0 0.5rem;
+}

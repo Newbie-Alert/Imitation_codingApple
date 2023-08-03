@@ -1,7 +1,6 @@
 // COMPOSITION
 import NavComp from './Comp/Nav/NavComp';
 
-
 // PAGES
 import Home from './Pages/Home/Home';
 import Course from './Pages/Course/Course';
@@ -9,7 +8,7 @@ import Detail from './Pages/Detail/Detail';
 import Board from './Pages/Board/Board';
 import BoardContent from './Pages/BoardContent/BoardContent';
 import Cart from './Pages/Cart/Cart';
-import SignIn from './Pages/Signin/signin';
+import SignUp from './Pages/Signin/signin';
 
 // HOOK
 import { Routes, Route } from 'react-router-dom';
@@ -17,7 +16,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import './App.css';
-
 
 
 function App() {
@@ -52,7 +50,7 @@ function App() {
           <Route path='board/:id1/:id2' element={<Board />} />
           <Route path='/board/content/:id1/:id2' element={<BoardContent />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/signIn' element={<SignIn />} />
+          <Route path='/signIn' element={<SignUp />} />
         </Route>
       </Routes>
     </div>

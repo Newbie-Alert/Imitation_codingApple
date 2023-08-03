@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Board.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { CKEditor } from "ckeditor4-react";
 
 function Board() {
   let navi = useNavigate();
@@ -9,6 +10,7 @@ function Board() {
   let [title, setTitle] = useState("");
   let [boardContent, setBoardContent] = useState([]);
   let [writeUI, setWriteUI] = useState(false);
+
   // GET DATA
   useEffect(() => {
     axios
