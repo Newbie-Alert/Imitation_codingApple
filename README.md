@@ -20,6 +20,7 @@
 - Mongo DB
 - Express
 - React
+- axios
 - Node.js
 
 ## 구현 📱
